@@ -1,713 +1,278 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Сессия Mech — поиск по вопросам</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --muted: #94a3b8;
+      --text: #e5e7eb;
+      --accent: #22c55e;
+      --accent2: #38bdf8;
+      --danger: #f97316;
+      --border: rgba(255,255,255,.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #1e293b, var(--bg));
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 16px;
+      background: rgba(15,23,42,.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(22px, 4vw, 34px);
+    }
+    .sub {
+      color: var(--muted);
+      margin-bottom: 14px;
+      line-height: 1.45;
+    }
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 10px;
+      align-items: center;
+    }
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #020617;
+      color: var(--text);
+      font-size: 16px;
+      outline: none;
+    }
+    input:focus {
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 3px rgba(56,189,248,.18);
+    }
+    button {
+      border: 1px solid var(--border);
+      background: #1f2937;
+      color: var(--text);
+      padding: 13px 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    button:hover { background: #334155; }
+    main {
+      padding: 18px 16px 50px;
+    }
+    .stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .pill {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+    }
+    .grid {
+      display: grid;
+      gap: 12px;
+    }
+    .card {
+      background: rgba(17,24,39,.94);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.18);
+    }
+    .qtop {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .num {
+      color: var(--accent2);
+      font-weight: bold;
+      min-width: 56px;
+    }
+    .question {
+      font-size: 17px;
+      line-height: 1.45;
+      font-weight: 700;
+      flex: 1;
+    }
+    .answers {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .answer {
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.035);
+      line-height: 1.35;
+    }
+    .correct {
+      border-color: rgba(34,197,94,.55);
+      background: rgba(34,197,94,.13);
+    }
+    mark {
+      background: rgba(250,204,21,.35);
+      color: inherit;
+      border-radius: 4px;
+      padding: 0 2px;
+    }
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 40px 10px;
+      border: 1px dashed var(--border);
+      border-radius: 18px;
+    }
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 10px;
+    }
+    @media (max-width: 700px) {
+      .controls { grid-template-columns: 1fr; }
+      button { width: 100%; }
+      .qtop { flex-direction: column; }
+      .num { min-width: 0; }
+    }
+  </style>
+</head>
 <body>
-q>What is the primary function of an electromechanical relay?
-<+a>To act as an electrically controlled switch
-q>What component stores energy to maintain the coil’s energized state after disconnecting the external power source?
-<+a>Capacitor
-q>What is the purpose of the potentiometer dial on the electronic on-delay relay pictured in the passage?
-<+a>To control the on-delay time of the relay
-q>The passage compares latching relays to what other type of switch?
-<+a>A toggle switch
-q>What is the main advantage of a solid-state relay (SSR) compared to an electromechanical relay?
-<+a>Virtually unlimited cycle life and faster response time
-q>Why do SSRs generate more heat than similar electromechanical relays when carrying the same current?
-<+a>The semiconducting materials have higher resistance
-<q>In the provided schematic diagram, the dashed line represents the influence of the:
-<+a>Electromagnet coil on the switch mechanism.
-<q>What do the terms “Form-A” and “Form-B” correspond to in relay terminology?
-<+a>Double-pole and single-pole configurations
-<q>Which type of relay contact is described as having one moving contact and two stationary contacts it can touch?
-<+a>Single-pole, double-throw (SPDT)
-<q>What does the “COM” terminal designation typically represent on an SPDT relay?
-<+a>The moving contact of the switch mechanism
-<q>How does a DPDT relay differ from an SPDT relay in terms of its contact functionality?
-<+a>A DPDT relay offers isolated control of two independent circuits.
-<q> What is the purpose of the commutating diode connected in parallel with a relay coil?
-<+a>To provide a safe path for current dissipation during de-energization
-<q>What is the primary factor determining a relay coil rating?
-<+a>The current needed to activate the iron armature reliably
-<q>Which term refers to a delay that happens after the coil is de-energized?
-<+a>Off-delay
-<q>What is the primary function of a transformer?
-<+a>Step up or step down AC voltage
-<q>Which law governs the operation of a transformer?
-<+a>Faraday's Law of Electromagnetic Induction
-<q>A transformer consists of:
-<+a>Two coils wrapped around a common core
-<q>The core of a transformer is usually made of:
-<+a>Iron or steel
-<q>A transformer with more turns in the secondary winding compared to the primary winding is called a:
-<+a>Step-up transformer
-<q>Transformers are primarily used in:
-<+a>AC circuits
-<q>Autotransformers are used to:
-<+a>Provide galvanic isolation between primary and secondary circuits
-<q>The efficiency of a transformer is typically:
-<+a>Very high
-<q>The power input to a transformer is:
-<+a>Always equal to the power output
-<q>The primary and secondary windings of a transformer are typically made of:
-<+a>Copper
-<q>Transformers are used in power distribution systems to:
-<+a>Both correct
+  <header>
+    <div class="wrap">
+      <h1>Сессия Mech — поиск по вопросам</h1>
+      <div class="sub">Офлайн HTML-файл с поиском. Можно искать по словам из вопроса или ответа. Правильный ответ подсвечен зелёным.</div>
+      <div class="controls">
+        <input id="search" type="search" placeholder="Например: metrology, AutoCAD, CoppeliaSim, soldering..." autocomplete="off" />
+        <button id="showAll">Показать всё</button>
+        <button id="onlyCorrect">Только правильные ответы</button>
+      </div>
+      <div class="small">Совет: на телефоне нажми Ctrl+F не нужен — поиск уже встроен в сайт.</div>
+    </div>
+  </header>
 
-<q>Transformers are used in electronic circuits for:
-<+a>All answers correct
-<q>LVDTs and RVDTs are used for:
-<+a>Position sensing
-<q>Transformers can be used for measurement applications to:
-<+a>Both step-up and step-down high voltages for measurement
-<q>What is the primary advantage of polyphase electric circuits over single-phase circuits?
-<+a>More continuous power delivery
-<q>What is the most common type of polyphase circuit used in industry?
-<+a>Three-phase
-<q>How are the voltages in a three-phase system phase-shifted from each other?
-<+a>120 degrees
-<q>What is the term used to describe the order in which the voltages in a polyphase system reach their peak values?
-<+a>Phase sequence
-<q>What are the two primary ways to connect the stator windings of a three-phase generator?
-<+a>Star and Delta
-<q>How do line voltage and phase voltage relate to each other in a Star-connected system?
-<+a>Line voltage is √3 times phase voltage
-<q>How do line current and phase current relate to each other in a Delta-connected system?
-<+a>Line current is √3 times phase current
-<q>What is the relationship between the total power in a three-phase system and the power in each phase?
-<+a>The total power is the sum of the powers in each phase
-<q>What are the three main components of a three-phase induction motor?
-<+a>Stator, rotor, and enclosure
-<q>What is the purpose of the stator in an induction motor?
-<+a>To produce the magnetic field
-<q>What is the purpose of the rotor in an induction motor?
-<+a>To provide mechanical power
-<q> What is the purpose of the enclosure in an induction motor?
-<+a>To protect the motor from damage
-<q>What is the name of the thin metal sheets used to construct the stator core?
-<+a>Laminations
-<q>What is the synchronous speed of a 4-pole induction motor operating at a frequency of 60 Hz?
-<+a>1800 RPM
-<q>What is the term for the difference in speed between the stator's rotating magnetic field and the rotor's speed?
-<+a>Slip
-<q>What is the most common type of induction motor?
-<+a>Squirrel-cage
-<q>How can the direction of rotation of an induction motor be reversed?
-<+a>By swapping two of the power lines
-<q>What is the relationship between the number of poles in an induction motor and its synchronous speed?
-<+a>More poles mean lower speed
-<q>What is the term for the maximum continuous torque that an induction motor can produce?
-<+a>Full load torque
-<q>When two or more bare conductors touch causing the resistance between the two to drop
-<+a>Short circuit
-<q>When the current exceeds the trip class of the device?
-<a>Ground fault
-<+a>Overload
-<q>What is the primary purpose of a 4-20 mA signal in industrial automation?
-<+a>To represent a physical measurement or control signal
-<q>What are the two primary signal standards used in industrial automation?
-<+a>3-15 PSI and 4-20 mA DC
-<q>What is the primary advantage of a "live zero" signal standard?
-<+a>It provides a simple way to detect signal failures
-<q>What is the purpose of an I/P transducer?
-<+a>To convert a 4-20 mA current signal to a pneumatic pressure signal
-<q>What is the primary difference between a 4-wire transmitter and a 2-wire transmitter?
-<+a>The 4-wire transmitter requires a separate power supply
-<q>What is the purpose of a precision resistor in a 4-20 mA system?
-<+a>To convert a current signal to a voltage signal
-<q>What is the typical voltage range for a 4-20 mA signal?
-<+a>10-50V DC
-<q>What is the relationship between the process variable (PV) and the manipulated variable (MV) in a control loop?
-<+a>The relationship between the PV and MV depends on the controller's algorithm
-<q>What is the role of a controller in a control loop?
-<+a>To compare the SP to PV and adjust the output accordingly
-<q>What is the purpose of a reverse-acting controller?
-<+a>To decrease the gain of the controller
-<q>What is the difference between a direct-acting controller and a reverse-acting controller?
-<+a>The direct-acting controller increases the output when the PV increases, while the reverse-acting controller decreases the output when the PV increases.
-<q>What is the fundamental principle of instrumentation system troubleshooting?
-<+a>An instrument's output should correspond to its input.
-<q>What is the primary tool for troubleshooting 4-20 mA analog signal-based instruments?
-<+a>Multimeter
-<q>What is the major disadvantage of using a milliammeter to measure 4-20 mA signals?
-<+a>It interrupts the signal flow.
-<q>What is the purpose of a clamp-on milliammeter?
-<+a>To measure current without breaking the circuit.
-<q>What is a test diode used for in a 4-20 mA loop?
-<+a>To allow for non-invasive current measurement.
-<q>Why is it difficult to accurately measure current in a 4-20 mA loop using only a voltmeter?
-<+a>The voltage drop across the load is often unknown.
-<q>What is a common problem with loop-powered 4-20 mA transmitters?
-<+a>They may not have enough power to operate.
-<q>What is the purpose of a loop calibrator?
-<+a>To test and troubleshoot 4-20 mA loops.
-<q>What is the most important factor to consider when troubleshooting a 4-20 mA loop?
-<+a>The current flowing through the loop.
-<q>How does the frequency in the Nyquist plot get varied 
-<+a> -∞ to + ∞ 
-<q>On what principle is Nyquist stability based?
-<+a> Principle of Argument 
-<q>_______ used in determining the stability of the control system?
-<+a> Nyquist Plot 
-<q>If the system matrix of a linear time invariant continuous system is given by its characteristic equation is given by:
-<+a> s^2 + 5s + 3 
-<q>If the Nyquist plot of the loop transfer function G(s)H(s) of a closed-loop system encloses the (1, j0) point in the G(s)H(s) plane, the gain margin of the system is:
-<+a> Less than zero 
-<q>What if the enclosed path consists of poles but not zeroes then the direction encircled is?
-<+a> Opposite in Direction of Enclosed Closed Path 
-<q>Poles present on left-half of plane S of a Closed-loop Transfer function indicates ________?
-<+a> Closed Loop Control System is Stable 
-<q>Nyquist plots have magnitude as one at a certain frequency referred to as ____________?
-<+a> Gain Cross-Over Frequency 
-<q>Control system gets stable if?
-<+a> Phase Cross Over Frequency > Gain Cross Over Frequency
-<q>If Phase Cross Over Frequency <+a> Gain Cross Over Frequency indicates the system?
-<+a> Marginally Stable 
-<q>A linear time invariant system is stable if:
-<+a> Both a and b 
-<q>Asymptotic stability is concerned with:
-<+a>A system not under influence of input 
-<q>If a system is given unbounded input then the system is:
-<+a> Not defined
-<q>Linear mathematical model applies to:
-<+a> Stable systems
-<q>For non-linear systems, stability cannot be determined due to:
-<+a>All of the mentioned 
-<q>Bounded input and Bounded output stability notion concerns with:
-<+a> A system under influence of input 
-<q>If the impulse response is absolutely integrable then the system is:
-<+a> Absolutely stable 
-<q>___________ is a quantitative measure of how fast the transients die out in the system.
-<+a> Relative Stability
-<q>Routh Hurwitz criterion gives:
-<+a> Number of roots in the right half of the s-plane 
-<q>Routh Hurwitz criterion cannot be applied when the characteristic equation of the system contains coefficients which are:
-<+a> Exponential and sinusoidal function of s and complex
-<q>Consider the following statement regarding Routh Hurwitz criterion:
-<+a> It gives gain, phase margin and number of roots lying in RHS of the s-plane
-<q>Which of the test signals are best utilized by the stability analysis?
-<+a> Impulse 
-<q>In an open loop control system, the control action is:
-<+a> Independent of the desired output
-<q>Which of the following is not a classification of control systems?
-<+a> Parallel and Series Control Systems
-<q>The traffic lights control system is an example of a:
-<+a> Open loop control system
-<q>A closed loop control system is also known as:
-<+a> Automatic control system
-<q>What is the main advantage of a closed loop control system over an open loop control system?
-<+a> Stability and accuracy
-<q>In a control system, the feedback element is responsible for:
-<+a> Providing the error signal
-<q>The block diagram of an open loop control system consists of:
-<+a> Controller and Plant
-<q>Which of the following control systems adjusts the output automatically to match the desired response?
-<+a> Closed loop control system
-<q>In a control system, what is the main purpose of feedback?
-<+a> Improve the accuracy and stability
-<q>Which of the following is true for a continuous time control system?
-<+a> All signals are continuous in time
-<q>A SISO control system stands for:
-<+a> Single Input and Single Output
-<q>MIMO control systems have:
-<+a> Multiple inputs and multiple outputs
-<q>Which of the following types of feedback is used to improve the performance of a control system?
-<+a> Negative feedback	
-<q>The purpose of a controller in a control system is to:
-<+a> Produce the actuating signal
-<q>Which of the following is an example of a closed loop control system?
-<+a> Air conditioner with a thermostat
-<q>What does a negative feedback control system do?
-<+a> Decreases the error signal
-<q>In control systems, the term 'stability' refers to:
-<+a> The ability to maintain the desired output without oscillations
-<q>The process of using a root locus diagram is to:
-<+a> Observe the path of the closed loop poles
-<q>Which of the following is true about root locus?
-<+a> It starts at open loop poles and ends at open loop zeros
-<q>The magnitude condition in a root locus is used to find:
-<+a> The value of K for the points on the root locus branches
-<q>Which condition is used to check whether a point exists on the root locus branch?
-<+a> Angle condition
-<q>In the s-domain, the root locus is:
-<+a> Symmetrical about the real axis
-<q>The transfer function of a control system is defined as:
-<+a> The ratio of output to input in the frequency domain
-<q>In block diagram reduction, blocks in series can be:
-<+a> Multiplied together
-<q>In block diagram algebra, a summing point is used to:
-<+a> Add or subtract signals
-<q>Which rule is used to shift a take-off point before a block to a position after the block?
-<+a> Take-off point shifting rule
-<q>For a system with multiple inputs, the transfer function can be found by:
-<+a> Considering one input at a time and making the remaining inputs zero
-<q>The term 'poles' in a transfer function refers to:
-<+a> The values of s that make the denominator zero
-<q>Zeros in a transfer function are:
-<+a> The values of s that make the numerator zero
-<q>In a block diagram, blocks in parallel are:
-<+a> Added together
-<q>A block diagram can represent:
-<+a> Both linear and non-linear systems
-<q>When reducing a block diagram, the first step is to:
-<+a> Combine blocks in series or parallel
-<q>The characteristic equation of a system is derived from:
-<+a> The denominator of the transfer function
-<q>Which of the following is a necessary condition for a transfer function to be physically realizable?
-<+a> The degree of the numerator must be less than or equal to the degree of the denominator
-<q>In control systems, the term 'steady-state error' refers to:
-<+a> The error that occurs after the transient effects have died out
-<q>The phase margin of a stable system should be:
-<+a> Positive
-<q>If the gain margin of a system is negative, the system is:
-<+a> Unstable
-<q>A system with a gain margin greater than 1 and a phase margin greater than 0° is:
-<+a> Stable
-<q>The Nyquist plot is a plot of:
-<+a> Real part vs. imaginary part
-<q>In the root locus method, the breakaway points are:
-<+a> Points where multiple root locus branches meet
-<q>The centroid of the asymptotes in a root locus plot is:
-<+a> The average of the poles
-<q>The angle of departure in a root locus plot is calculated from:
-<+a> The sum of angles of zeros minus the sum of angles of poles
-<q>In the Bode plot, the slope of a pole at the origin is:
-<+a> -20 dB/decade
-<q>The slope of a zero at the origin in a Bode plot is:
-<+a> +20 dB/decade
-<q>The phase angle of a pole at the origin in a Bode plot is:
-<+a> -90°
-<q>The phase angle of a zero at the origin in a Bode plot is:
-<+a> +90°
-<q>The frequency at which the magnitude plot crosses 0 dB is called:
-<+a> Gain crossover frequency
-<q>The Nyquist plot helps in determining:
-<+a> Both stability and performance
-<q>In the Nyquist plot, encirclements of the point -1+j0 indicate:
-<+a> The number of right half plane poles of the open loop transfer function
-<q>The Bode plot of a stable system should have a phase margin of:
-<+a> 0° or more
-<q>The gain margin in a Bode plot is determined by:
-<+a> Both A and C
-<q>For a second-order underdamped system, the overshoot depends on:
-<+a> Damping ratio
-<q>The Nyquist stability criterion is applicable to:
-<+a> Only linear time-invariant systems
-<q>In the Nyquist plot, if the system has N right half plane poles, then to be stable, the plot must:
-<+a> Encircle -1 N times in the counterclockwise direction
-<q>State space representation of a control system consists of:
-<+a> A set of differential equations
-<q>The state vector in state space representation contains:
-<+a> State variables
-<q>In state space analysis, the matrix B represents:
-<+a> Input matrix
-<q>The matrix C in state-space representation is known as:
-<+a> Output matrix
-<q>The state-space representation can be used for:
-<+a> Both linear and non-linear systems
-<q>The controllability of a system indicates:
-<+a> The ability to control the state variables
-<q>A system is said to be observable if:
-<+a> The state can be determined from the output
-<q>The rank of the controllability matrix is equal to:
-<+a> The number of state variables
-<q>In state space analysis, the rank of the observability matrix should be:
-<+a> Equal to the number of state variables
-<q>In state space representation, the matrix D represents:
-<+a> Direct transmission matrix
-<q>The eigenvalues of the state matrix A in the state-space representation indicate:
-<+a> The poles of the system
-<q>A state feedback controller is used to:
-<+a> Modify the state equation
-<q>The design of a state feedback controller requires:
-<+a> Controllability of the system
-<q>The observer design in state space analysis is used for:
-<+a> Estimating the state from the output
-<q>A full-order state observer estimates:
-<+a> All the state variables
-<q>The pole placement method in state-space design involves:
-<+a> Placing the poles of the closed-loop system at desired locations
-<q>The Kalman filter is used for:
-<+a> State estimation in the presence of noise
-<q>In state-space design, robustness refers to:
-<+a> The ability of the system to remain stable under parameter variations
-<q>In the context of state-space representation, an uncontrollable system means: 
-<+a> The system's states cannot be controlled by the inputs 
-<q>What is feedback in a control system?
-<+a> A process to compare the output with the desired input
-<q>In a PID controller, what does PID stand for?
-<+a> Proportional-Integral-Derivative
-<q>Which of the following is an advantage of a closed-loop control system over an open-loop control system?
-<+a> Both A and B
-<q>What is a transfer function in control systems?
-<+a> The ratio of output to input in Laplace domain
-<q>What is the purpose of a compensator in a control system?
-<+a> To improve the performance of the system
-<q>Which of the following represents the root locus method?
-<+a> A graphical method to determine the roots of the characteristic equation
-<q>What is the Routh-Hurwitz criterion used for?
-<+a> To determine the stability of a system
-<q>Which of the following is a time-domain specification?
-<+a> All of the above
-<q>What does Bode plot represent in control systems?
-<+a> Frequency response of a system
-<q>What is the Nyquist criterion used for?
-<+a> To assess the stability of a control system
-<q>What does the term "gain margin" refer to?
-<+a> The amount by which the system gain can be increased before it becomes unstable
-<q>What is the function of a low-pass filter in control systems?
-<+a> To allow low-frequency signals to pass through and attenuate high-frequency signals
-<q>Which of the following is a characteristic of a second-order control system?
-<+a> Both A and B
-<q>What is the purpose of a lead compensator?
-<+a> To increase the phase margin
-<q>What is meant by "steady-state error"?
-<+a> The difference between the desired and actual output as time approaches infinity
-<q>What is the main advantage of state-space analysis?
-<+a> It can handle multiple-input multiple-output (MIMO) systems
-<q>Which of the following is a state variable in a control system?
-<+a> A variable that represents the state of the system at a given time
-<q>What is the main purpose of the Laplace transform in control systems?
-<+a> To transform differential equations into algebraic equations
-<q>What is MATLAB?
-<+a> A high-level programming language for numerical computation
-<q>Which of the following is a feature of MATLAB?
-<+a> All of the above
-<q>What is Simulink?
-<+a> A graphical programming environment for modeling, simulating, and analyzing multidomain dynamical systems
-<q>Which command is used to start Simulink in MATLAB?
-<+a> simulink
-<q>How can you create a new model in Simulink?
-<+a> By clicking on 'New Model' in the Simulink Library Browser
-<q>Which block is used to represent a transfer function in Simulink?
-<+a> Transfer Function block
-<q>How can you run a Simulink model?
-<+a> By clicking the 'Run' button in the Simulink toolbar
-<q>What is the use of the Scope block in Simulink?
-<+a> To visualize signals
-<q>Which of the following can be modeled using Simulink?
-<+a> All of the above
-<q>How do you add a block to a Simulink model?
-<+a> By dragging it from the Simulink Library Browser into the model window
-<q>What does the 'Gain' block in Simulink do?
-<+a> Multiplies the input signal by a constant value
-<q>How can you save a Simulink model?
-<+a> By clicking 'File' and then 'Save'
-<q>Which of the following commands is used to create a plot in MATLAB?
-<+a> plot
-<q>What does the Routh-Hurwitz criterion determine?
-<+a> The stability of the system
-<q>Which type of system has zero steady-state error for a parabolic input?
-<+a>  Type-2 system
-<q>The phase margin of a system can be increased by:
-<+a>  Adding a zero
-<q>The stability of a system can be determined by:
-<+a>  The location of poles in the s-plane
-<q>Which of the following methods is used to improve the steady-state accuracy of a control system?
-<+a>  Adding an integral action
-<q>The effect of a Proportional-Integral (PI) controller on the system is:
-<+a>  To eliminate the steady-state error
-<q>The Nyquist plot is used to determine:
-<+a>  The stability of a system
-<q>The use of a Bode plot is to:
-<+a>  Analyze the frequency response
-<q>In control system analysis, the term 'bandwidth' refers to:
-<+a>  The range of frequencies over which the system can respond effectively
-<q>The addition of a derivative action in a controller helps in:
-<+a>  Improving the transient response
-<q>In a unity feedback system, if the open-loop transfer function has more poles than zeros, the system is:
-<+a>Stable
-<q>The transfer function of a lead compensator is characterized by:
-<+a>One zero and one pole with the zero further from the origin
-<q>Which controller is most effective in reducing the peak overshoot?
-<+a>Proportional-Derivative (PD) controller
-<q>Which of the following is a disadvantage of a Proportional-Integral-Derivative (PID) controller?
-<+a>Difficulty in tuning
-<q>What is the primary use of a transfer function in control systems?
-<+a>To analyze the input-output relationship in the frequency domain
-<q>Which of the following represents the bandwidth of a system in a Bode plot?
-<+a>The frequency range over which the gain is within -3 dB of its maximum value
-<q>The response of a control system that overshoots and oscillates before settling is indicative of:
-<+a>Underdamped system
-<q>In a second-order system, the term 'natural frequency' refers to:
-<+a>The undamped frequency of oscillation
-<q>Which of the following compensators is used to improve the phase margin of a system?
-<+a>Lead compensator
-<q>Which of the following is a type of control system?
-<+a>Both A and B
-<q>The error signal in a closed loop control system is:
-<+a>The difference between the input and feedback signal
-<q>linear time invariant system Stability of a system implies that :
-<+a>All of the above mentioned 
-<q>A linear time invariant system is stable if :
-<+a>Both a and b 
-<q>Asymptotic stability is concerned with:
-<+a>A system not under influence of input 
-<q>What is MATLAB?
-<+a>A high-level programming language for numerical computation
-<q>Which of the following is a feature of MATLAB?
-<+a> All of the above
-<q>What is Simulink?
-<+a>A graphical programming environment for modeling, simulating, and analyzing multidomain dynamical systems
-<q>What is the use of the Scope block in Simulink?
-<+a>To visualize signals
-<q>How do you add a block to a Simulink model?
-<+a>By dragging it from the Simulink Library Browser into the model window
-<q>What does the 'Gain' block in Simulink do?
-<+a>Multiplies the input signal by a constant value
-<q>What does the command clear do in MATLAB?
-<+a>Clears all variables from the workspace
-<q>How do you define a matrix in MATLAB?
-<+a>Using square brackets, e.g., [1 2; 3 4]
-<q>What is the use of the subplot command in MATLAB?
-<+a>To create multiple plots in a single figure
-<q>What is an input signal in an automatic control system?
-<+a>A signal arriving at the input of the system
-<q>What is a transfer function in automatic control theory?
-<+a> A function describing the relationship between the input and output of a system
-<q>What does the MATLAB command 'plot' do?
-<+a> Creates a 2D plot of data
-<q>Which command is used to clear the command window in MATLAB?
-<+a>clc
-<q>How are logarithmic frequency characteristics obtained in MATLAB?
-<+a>bode
-<q>What does the feedback function in MATLAB do?
-<+a>Applies negative feedback to a system
-<q>Which package in MATLAB is used for creating linear models of automatic control systems?
-<+a> Control System Toolbox
-<q>Which software is primarily used in the laboratory practicals for studying ACS?
-<+a>MATLAB
-<q>What does an operational amplifier amplify?
-<+a>Voltage 
-<q>Which terminal of an op-amp is non-inverting?
-<a>Negative
-<+a>Positive 
-<q>A sawtooth wave is characterized by:
-<+a>Linear rise and abrupt fall 
-<q>A Bipolar Junction Transistor has how many terminals?
-<+a>3 
-<q>In a regulated power supply rectifier stage converts:
-<+a>AC to DC 
-<q>A 555 timer in astable mode generates:
-<+a>Continuous pulses 
-<q>The trigger pin of a 555 timer is:
-<+a>Pin 2 
-<q>In op-amp mathematical operations, summing amplifier performs:
-<+a>Addition 
-<q>A transistor in cutoff region acts as:
-<+a>Open switch 
-<q>In a delay timer circuit, the time delay depends on:
-<+a>RC product 
-<q>A regulated power supply reduces:
-<+a>Ripple voltage 
-<q>A bistable multivibrator is also called:
-<+a>Flip-flop 
-<q>In op-amp, negative feedback:
-<+a>Reduces gain 
-<q>The sawtooth generator uses:
-<+a>Integrator 
-<q>A BJT transistor type NPN means current flows:
-<+a>Emitter to base 
-<q>A 555 timer powered between 4.5–15 V means it is:
-<+a>Timer IC 
-<q>Op-amp ideal input impedance is:
-<+a>Infinite 
-<q>In delay timer, a negative pulse at trigger causes:
-<+a>Trigger action 
-<q>A regulated power supply output is:
-<+a>Constant DC 
-<q>Bistable multivibrator outputs:
-<+a>Two stable states 
-<q>What is differential amplification?
-<+a>Amplifying difference between inputs 
-<q>In op-amp subtraction circuit, output is:
-<+a>Difference 
-<q>Sawtooth wave generator needs:
-<+a>Integrator and feedback 
-<q>In a 555 astable circuit, the output waveform is:
-<+a>Square 
-<q>In a BJT amplifier, gain is ratio of:
-<+a>Output current to input current 
-<q>Op-amp slew rate limits:
-<+a>High frequency performance 
-<q>In regulated power supply, zener diode is used for:
-<+a>Voltage reference 
-<q>A delay timer circuit will hold output high until:
-<+a>Time expires 
-<q>Op-amp inverting amplifier gain depends on:
-<+a>Resistor ratio 
-<q>The bistable multivibrator changes state by:
-<+a>Trigger inputs 
-<q>Sawtooth waveform amplitude is affected by:
-<+a>RC time constant 
-<q>In a 555 timer astable, duty cycle depends on:
-<+a>External resistors and capacitor values 
-<q>Op-amp integrator output is proportional to:
-<+a>Time integral of input 
-<q>In BJT, saturation means:
-<+a>Transistor fully on
-<q>Regulated power supply filter reduces ripple by:
-<+a>Capacitance 
-<q>The 555 timer comparators compare internal reference voltages of:
-<+a>1/3 and 2/3 Vcc 
-<q>A summing amplifier produces output equal to:
-<+a>Weighted sum 
-<q>The threshold pin of 555 triggers a change when voltage:
-<+a>>2/3 Vcc 
-<q>Op-amp comparator output saturates at:
-<+a>Supply rails 
-<q>Bistable output is set by:
-<+a>S input 
-<q>In sawtooth generator, linearity requires:
-<+a>Constant current charge 
-<q>Op-amp differential gain is defined as:
-<+a>Gain for difference signals
-<q>In BJT amplifier, why biasing is required?
-<+a>To set correct quiescent point 
-<q>The 555 internal flip-flop switches state when:
-<+a>Trigger crosses thresholds 
-<q>Regulated power supply dropout voltage refers to:
-<+a>Minimum supply to maintain regulation 
-<q>Input offset voltage in op-amp affects:
-<+a>DC accuracy 
-<q>In delay timer mode, 555 output remains high until capacitor voltage:
-<+a>Reaches 2/3 Vcc 
-<q>A regulated power supply uses which component to reduce ripple?
-<+a>Capacitor filter 
-<q>Op-amp common-mode rejection is important to:
-<+a>Reject common voltage noise 
-<q>In 555 astable mode, frequency formula includes:
-<+a>R1 and R2 and C 
-<q>Op-amp output depends on the difference between:
-<+a>Inputs 
-<q>Sawtooth output has:
-<+a>Linear ramp 
-<q>BJT base controls:
-<+a>Collector current 
-<q>A regulated power supply requires:
-<+a>All 
-<q>Reverse proportional parameter of frequency:
-<+a>Period 
-<q>The output pin of a 555 timer is:
-<+a>Pin 3 
-<q>A bistable multivibrator has:
-<+a>Two stable states 
-<q>In an op-amp, the symbol "+" represents:
-<+a>Non-inverting input 
-<q>A rectifier circuit mainly uses:
-<+a>Diodes 
-<q>The emitter terminal of a BJT is usually:
-<+a>Lightly doped 
-<q>A sawtooth waveform has:
-<+a>Linear rise and sudden fall 
-<q>In a regulated power supply, filtering is done using:
-<+a>Capacitor 
-<q>An op-amp ideally amplifies:
-<+a>Difference between inputs 
-<q>The trigger pin of a 555 timer activates when voltage is:
-<+a>Below 1/3 Vcc 
-<q>A transistor used as a switch operates in:
-<+a>Cutoff and saturation 
-<q>A bistable circuit is commonly used as:
-<+a>Memory element 
-<q>The main purpose of a regulator is to:
-<+a>Stabilize voltage 
-<q>In astable mode, 555 timer output is:
-<+a>Pulsating square wave 
-<q>The collector current in a BJT is controlled by:
-<+a>Base current 
-<q>An ideal op-amp has output impedance:
-<+a>Zero 
-<q>In a summing amplifier, multiple inputs are combined using:
-<+a>Resistors 
-<q>The frequency of a sawtooth generator mainly depends on:
-<+a>RC time constant 
-<q>In a BJT amplifier, biasing ensures:
-<+a>Proper operating point 
-<q>The output of an integrator op-amp is proportional to:
-<+a>Input integral 
-<q>A 555 timer in monostable mode acts as:
-<+a>One-shot pulse generator 
-<q>The duty cycle of a 555 astable circuit depends on:
-<+a>External resistors and capacitor 
-<q>In a regulated power supply, ripple factor is reduced by:
-<+a>Filter 
-<q>A comparator compares:
-<+a>Two voltages 
-<q>A non-inverting amplifier provides:
-<+a>No phase inversion 
-<q>The bistable multivibrator changes state when:
-<+a>Trigger input is applied 
-<q>In op-amps, common-mode signals are ideally:
-<+a>Ignored 
-<q>The main function of a zener diode is:
-<+a>Voltage regulation 
-<q>In a BJT, saturation region means:
-<+a>Transistor fully ON 
-<q>The output of a comparator is usually:
-<+a>Digital-like
-<q>The sawtooth wave generator uses an op-amp as:
-<+a>Integrator 
-<q>In a delay timer, delay time increases if:
-<+a>R or C increases 
-<q>Op-amp offset voltage mainly affects:
-<+a>DC accuracy 
-<q>The reset pin of a 555 timer is used to:
-<+a>Stop output 
-<q>A regulated power supply without regulator is called:
-<+a>Unregulated supply
-<q>In a differential amplifier, output depends on:
-<+a>Difference of inputs 
-<q>High slew rate in op-amp allows:
-<+a>Faster output voltage change 
-<q>The linearity of sawtooth waveform improves with:
-<+a>Constant current charging 
-<q>Common Mode Rejection Ratio (CMRR) indicates ability to:
-<+a>Reject common signals 
-<q>In 555 timer, internal reference voltages are set at:
-<+a>1/3 and 2/3 Vcc 
-<q>Dropout voltage of a regulator is:
-<+a>Minimum input-output difference 
-<q>In bistable multivibrator, output remains unchanged until:
-<+a>Trigger is applied
-<q>Op-amp integrator becomes unstable at high frequency due to:
-<+a>Saturation 
-<q>In BJT, thermal runaway occurs due to increase in:
-<+a>Collector current 
-<q>The regulation percentage indicates:
-<+a>Load variation effect 
-<q>In 555 astable mode, frequency is inversely proportional to:
-<+a>RC combination 
-<q>An op-amp is mainly used for:
-<+a>Signal amplification 
-<q>A BJT has terminals named:
-<+a>Base, Emitter, Collector 
-<q>A sawtooth wave has a:
-<+a>Linear ramp 
-<q>A rectifier converts:
-<+a>AC to DC 
-<q>A 555 timer IC contains:
-<+a>Two comparators 
-<q>In a bistable multivibrator, memory is stored as:
-<+a>Voltage level 
-<q>The main source of ripple is:
-<+a>Rectifier 
-<q>The inverting input of an op-amp is marked with:
-<+a>-
-<q>Astable multivibrator produces:
-<+a>Continuous pulses 
-<q>A zener diode operates in:
-<+a>Reverse breakdown 
-<q>In a BJT, base current is:
-<+a>Very small 
-<q>Filtering mainly removes:
-<+a>AC ripple 
-<q>The output of a comparator is:
-<+a>Digital-like 
-<q>An ideal op-amp has infinite:
-<+a>Input impedance 
+  <main>
+    <div class="wrap">
+      <div class="stats">
+        <span class="pill" id="total"></span>
+        <span class="pill" id="shown"></span>
+      </div>
+      <div id="list" class="grid"></div>
+    </div>
+  </main>
+
+  <script>
+    const DATA = [{"question": "What is metrology? <a> Study of materials <+a> Science of measurement <a> Science of energy <a> Study of standards", "answers": [], "correct_indexes": []}, {"question": "Which error remains constant during repeated measurements? <a> Random error <a> Gross error <+a> Systematic error <a> Dynamic error", "answers": [], "correct_indexes": []}, {"question": "Which error changes unpredictably from one measurement to another? <+a> Random error <a> Systematic error <a> Additional error <a> Static error", "answers": [], "correct_indexes": []}, {"question": "The SI unit of length is: <a> Kilometer <+a> Meter <a> Centimeter <a> Inch", "answers": [], "correct_indexes": []}, {"question": "The SI unit of mass is: <a> Gram <a> Tonne <+a> Kilogram <a> Pound", "answers": [], "correct_indexes": []}, {"question": "A confidence interval is used to: <a> Eliminate errors <+a> Estimate measurement reliability <a> Increase sensitivity <a> Calibrate instruments", "answers": [], "correct_indexes": []}, {"question": "Which instrument reproduces a physical quantity of a given size? <a> Transducer <a> Standard <+a> Measure <a> Recorder", "answers": [], "correct_indexes": []}, {"question": "Measuring instruments have: <a> Economic characteristics <+a> Metrological characteristics <a> Chemical characteristics <a> Biological characteristics", "answers": [], "correct_indexes": []}, {"question": "A measuring device produces information: <+a> For direct observation <a> Only for computers <a> Only for storage <a> Only for transmission", "answers": [], "correct_indexes": []}, {"question": "A transducer converts information into a form suitable for: <a> Direct reading only <+a> Transmission and processing <a> Manual calculations only <a> Visual inspection", "answers": [], "correct_indexes": []}, {"question": "Which measuring instrument is used in everyday practice? <a> National standard <+a> Working MI <a> Primary standard <a> Secondary standard", "answers": [], "correct_indexes": []}, {"question": "Exemplary measuring instruments are used for: <a> Production <+a> Calibration and verification <a> Packaging <a> Transportation", "answers": [], "correct_indexes": []}, {"question": "The most accurate standard is called: <a> Secondary standard <a> Working standard <+a> Primary standard <a> Technical standard", "answers": [], "correct_indexes": []}, {"question": "The International Bureau of Weights and Measures maintains: <a> Universities <a> National laboratories <+a> International standards <a> Factories", "answers": [], "correct_indexes": []}, {"question": "The relationship between input and output in static mode is called: <a> Dynamic response <+a> Static characteristic <a> Frequency response <a> Calibration error", "answers": [], "correct_indexes": []}, {"question": "Sensitivity of an instrument is: <+a> Output/Input ratio change <a> Scale length <a> Error limit <a> Resolution", "answers": [], "correct_indexes": []}, {"question": "The smallest detectable input change is called: <+a> Threshold of sensitivity <a> Dynamic range <a> Span <a> Hysteresis", "answers": [], "correct_indexes": []}, {"question": "Accuracy class is: <a> Dimensional quantity <a> Unit of measurement <+a> Generalized metrological characteristic <a> Calibration factor", "answers": [], "correct_indexes": []}, {"question": "Lower accuracy-class numbers indicate: <a> Lower accuracy <+a> Higher accuracy <a> No difference <a> Larger scales", "answers": [], "correct_indexes": []}, {"question": "Basic error occurs under: <a> Extreme conditions <+a> Normal conditions <a> Dynamic conditions <a> Emergency conditions", "answers": [], "correct_indexes": []}, {"question": "Additional error is caused by: <a> Normal conditions <+a> Influencing quantities outside normal range <a> Calibration <a> Repeated measurements", "answers": [], "correct_indexes": []}, {"question": "Dynamic error appears when measuring: <a> Constant quantities <+a> Variable quantities <a> Standards <a> Static systems", "answers": [], "correct_indexes": []}, {"question": "Absolute error equals: <+a> Measured value minus actual value <a> Actual value minus measured value <a> Error divided by actual value <a> Error multiplied by actual value", "answers": [], "correct_indexes": []}, {"question": "Relative error is usually expressed in: <a> Meters <a> Volts <+a> Percent <a> Seconds", "answers": [], "correct_indexes": []}, {"question": "Reduced error uses: <+a> Normalizing value <a> Actual value only <a> Standard deviation <a> Variance", "answers": [], "correct_indexes": []}, {"question": "Additive error is associated with: <+a> Scale shift <a> Sensitivity change <a> Nonlinearity <a> Hysteresis", "answers": [], "correct_indexes": []}, {"question": "Multiplicative error affects: <a> Zero point only <+a> Sensitivity of the instrument <a> Environment only <a> Temperature only", "answers": [], "correct_indexes": []}, {"question": "Hysteresis error occurs because of: <a> Perfect linearity <+a> Lag between increasing and decreasing input <a> Calibration <a> Zero adjustment", "answers": [], "correct_indexes": []}, {"question": "Standardization is aimed at: <a> Increasing uncertainty <+a> Establishing requirements and rules <a> Reducing production <a> Limiting technology", "answers": [], "correct_indexes": []}, {"question": "One purpose of standardization is: <+a> Resource saving <a> Increasing waste <a> Eliminating quality <a> Restricting trade", "answers": [], "correct_indexes": []}, {"question": "An object of standardization may be: <a> Product <a> Process <a> Service <+a> All of the above", "answers": [], "correct_indexes": []}, {"question": "International standards are developed by: <a> Local companies <+a> ISO <a> Schools <a> Banks", "answers": [], "correct_indexes": []}, {"question": "ISO was established in: <a> 1926 <+a> 1946 <a> 1960 <a> 1975", "answers": [], "correct_indexes": []}, {"question": "IEC specializes in: <a> Agriculture <+a> Electrical engineering and electronics <a> Medicine <a> Construction", "answers": [], "correct_indexes": []}, {"question": "ISO standards are generally: <a> Mandatory worldwide <+a> Voluntary <a> Illegal <a> Temporary", "answers": [], "correct_indexes": []}, {"question": "CASCO deals with: <a> Consumer rights <+a> Conformity assessment <a> Standard samples <a> Information services", "answers": [], "correct_indexes": []}, {"question": "DEVCO assists: <a> Developed countries <+a> Developing countries <a> Universities <a> Laboratories only", "answers": [], "correct_indexes": []}, {"question": "COPOLCO protects: <a> Manufacturers <+a> Consumers <a> Governments <a> Investors", "answers": [], "correct_indexes": []}, {"question": "INFCO is responsible for: <+a> Scientific and technical information <a> Calibration <a> Testing <a> Manufacturing", "answers": [], "correct_indexes": []}, {"question": "A harmonized standard helps fulfill: <+a> Technical regulations <a> Business plans <a> Marketing goals <a> Tax policies", "answers": [], "correct_indexes": []}, {"question": "Technical regulations are: <a> Optional <+a> Mandatory <a> Temporary <a> Informal", "answers": [], "correct_indexes": []}, {"question": "National standards are adopted by: <+a> National authorities <a> Individuals <a> Students <a> Laboratories only", "answers": [], "correct_indexes": []}, {"question": "A product standard specifies requirements for: <+a> Products <a> Services only <a> Personnel <a> Buildings", "answers": [], "correct_indexes": []}, {"question": "Compatibility standards ensure: <+a> Interchangeability and compatibility <a> Marketing efficiency <a> Lower wages <a> Transportation", "answers": [], "correct_indexes": []}, {"question": "Calibration characteristic may be represented as: <a> Formula <a> Graph <a> Table <+a> All of the above", "answers": [], "correct_indexes": []}, {"question": "Linear scales have: <a> Variable sensitivity <+a> Constant sensitivity <a> Zero sensitivity <a> Infinite sensitivity", "answers": [], "correct_indexes": []}, {"question": "Multiple measurements reduce: <+a> Random errors <a> Instrument cost <a> Temperature <a> Voltage", "answers": [], "correct_indexes": []}, {"question": "Parametric stabilization improves: <+a> Measurement accuracy <a> Packaging quality <a> Production speed only <a> Transportation", "answers": [], "correct_indexes": []}, {"question": "The Committee for Technical Regulation and Metrology is the national body in: <a> Germany <+a> Kazakhstan <a> Japan <a> Canada", "answers": [], "correct_indexes": []}, {"question": "Uniformity of measurements is one goal of: <+a> Standardization <a> Marketing <a> Accounting <a> Logistics", "answers": [], "correct_indexes": []}, {"question": "Which committee studies scientific principles of standardization? <a> CASCO <+a> STACO <a> DEVCO <a> REMCO", "answers": [], "correct_indexes": []}, {"question": "REMCO works with: <+a> Standard samples <a> Consumers <a> Calibration laboratories <a> Technical regulations", "answers": [], "correct_indexes": []}, {"question": "PLAKO is responsible for: <+a> Technical planning and coordination <a> Consumer protection <a> Trade regulations <a> Certification only", "answers": [], "correct_indexes": []}, {"question": "Measurement uncertainty reflects: <+a> Confidence in a result <a> Instrument price <a> Production cost <a> Product quality", "answers": [], "correct_indexes": []}, {"question": "A standard deviation characterizes: <+a> Spread of results <a> Average value <a> Accuracy class <a> Calibration range", "answers": [], "correct_indexes": []}, {"question": "Which error cannot be predicted exactly? <+a> Random error <a> Basic error <a> Additive error <a> Multiplicative error", "answers": [], "correct_indexes": []}, {"question": "Static mode means: <+a> Input and output remain constant <a> Input changes rapidly <a> Output oscillates <a> Dynamic operation", "answers": [], "correct_indexes": []}, {"question": "Metrological characteristics affect: <+a> Measurement results and errors <a> Product color <a> Weight only <a> Packaging", "answers": [], "correct_indexes": []}, {"question": "A national standard may also be: <+a> Primary standard <a> Secondary standard only <a> Working standard only <a> Product standard", "answers": [], "correct_indexes": []}, {"question": "International standards support: <+a> Global trade and cooperation <a> Local restrictions <a> Political campaigns <a> Taxation", "answers": [], "correct_indexes": []}, {"question": "Which of the following statements best describes the primary role of metrology in modern industrial production, scientific research, and quality management systems?", "answers": ["To ensure the reliability and comparability of measurement results <a> To optimize the efficiency and profitability of production processes <a> To improve the management and distribution of industrial resources <a> To coordinate the planning and control of manufacturing activities"], "correct_indexes": [0]}, {"question": "During calibration, an engineer discovers that all measured values differ from the reference value by approximately the same amount. Which type of error is most likely present?", "answers": ["Random error caused by environmental fluctuations <+a> Systematic error resulting from a constant deviation <a> Gross error produced by operator negligence <a> Dynamic error associated with changing conditions"], "correct_indexes": []}, {"question": "A laboratory performs repeated measurements of the same quantity under identical conditions and obtains slightly different results each time. What is the most probable cause?", "answers": ["Variations caused by random measurement effects <a> Deviations introduced by incorrect calibration procedures <a> Changes produced by systematic instrument malfunction <a> Distortions generated by excessive measurement sensitivity"], "correct_indexes": [0]}, {"question": "Why is measurement uncertainty included in modern measurement reports and calibration certificates?", "answers": ["To describe the possible range of measurement values <a> To establish the operating limits of measuring equipment <a> To determine the maintenance schedule of instruments <a> To specify the legal status of laboratory activities"], "correct_indexes": [0]}, {"question": "Which factor has the greatest influence on the confidence interval calculated from a series of measurements?", "answers": ["Statistical variation and selected confidence level <a> Instrument design and manufacturing technology <a> Environmental conditions and laboratory location <a> Operator qualifications and professional experience"], "correct_indexes": [0]}, {"question": "A manufacturing company performs periodic calibration of measuring instruments to ensure that production measurements remain accurate over time. What is the primary purpose of this calibration activity within the quality management system?", "answers": ["To maintain measurement reliability and traceability <a> To improve production efficiency and resource allocation <a> To simplify documentation and reporting procedures <a> To increase product competitiveness and market access"], "correct_indexes": [0]}, {"question": "A measuring instrument demonstrates a gradual change in its readings over several months despite operating under normal conditions. Which phenomenon most likely explains this behavior?", "answers": ["Instrument drift caused by long-term performance changes <a> Random variation caused by environmental disturbances <a> Calibration uncertainty resulting from statistical analysis <a> Standard deviation associated with repeated measurements"], "correct_indexes": [0]}, {"question": "In international trade, manufacturers often apply harmonized standards when designing and producing products. What is the main advantage of using such standards?", "answers": ["They promote compatibility and facilitate market acceptance <a> They reduce product complexity and technical documentation <a> They eliminate conformity assessment and certification activities <a> They replace national regulations and legal requirements"], "correct_indexes": [0]}, {"question": "A laboratory receives accreditation according to internationally recognized requirements. What does this accreditation primarily demonstrate to customers and regulatory authorities?", "answers": ["The laboratory possesses verified technical competence and reliability <a> The laboratory produces equipment with improved performance characteristics <a> The laboratory follows national legislation concerning labor protection <a> The laboratory operates according to internal commercial objectives"], "correct_indexes": [0]}, {"question": "When several laboratories measure the same reference sample and compare their results, the activity is mainly intended to:", "answers": ["Evaluate measurement competence and result comparability <a> Determine product quality and manufacturing efficiency <a> Establish new measurement units and reference standards <a> Reduce calibration costs and laboratory expenses"], "correct_indexes": [0]}, {"question": "An organization implementing ISO 9001 regularly reviews customer feedback and performance indicators. What is the primary objective of these activities?", "answers": ["To improve customer satisfaction and organizational effectiveness <a> To reduce technical requirements and quality controls <a> To eliminate internal audits and management reviews <a> To increase documentation volume and reporting complexity"], "correct_indexes": [0]}, {"question": "During a measurement process, environmental temperature exceeds the limits specified by the instrument manufacturer. What is the most probable consequence for the measurement results?", "answers": ["Additional errors may affect measurement accuracy significantly <a> Random errors will disappear due to thermal stabilization <a> Measurement uncertainty will automatically become negligible <a> Calibration characteristics will remain completely unchanged"], "correct_indexes": [0]}, {"question": "Why is measurement traceability considered essential in scientific research conducted by different organizations and countries?", "answers": ["It ensures consistency and comparability of obtained results <a> It reduces laboratory staffing and operational expenses <a> It eliminates the need for statistical data processing <a> It replaces calibration and verification procedures completely"], "correct_indexes": [0]}, {"question": "A technical committee is assigned to develop a new international standard for industrial measurement systems. What is the committee's primary responsibility?", "answers": ["Preparing consensus-based requirements and technical provisions <a> Conducting commercial negotiations with manufacturing companies <a> Supervising routine calibration activities in laboratories <a> Performing certification audits for industrial enterprises"], "correct_indexes": [0]}, {"question": "In a series of repeated measurements, the arithmetic mean is commonly used because it:", "answers": ["Represents the central tendency of measurement results <a> Eliminates systematic errors from measuring instruments <a> Determines the legal validity of measurement procedures <a> Establishes the calibration interval for measuring equipment"], "correct_indexes": [0]}, {"question": "A laboratory reports a small standard deviation for a set of measurement results. What conclusion can most reasonably be drawn from this information?", "answers": ["The measurement results are closely grouped together <a> The instrument possesses a high level of sensitivity <a> The calibration procedure was recently completed successfully <a> The measurement uncertainty is equal to zero"], "correct_indexes": [0]}, {"question": "Which statement best describes the role of conformity assessment in ensuring confidence in products, services, and management systems?", "answers": ["It provides objective evidence of compliance with requirements <a> It establishes international trade agreements and regulations <a> It replaces technical documentation and operating procedures <a> It determines product pricing and commercial strategies"], "correct_indexes": [0]}, {"question": "An engineer observes that a measuring instrument responds differently when the measured quantity increases compared with when it decreases. This behavior is characteristic of:", "answers": ["Hysteresis resulting from different response paths <a> Drift caused by long-term operational influences <a> Repeatability caused by stable measurement conditions <a> Sensitivity caused by proportional output variation"], "correct_indexes": [0]}, {"question": "Why do organizations perform internal audits as part of their quality management systems?", "answers": ["To identify nonconformities and improvement opportunities <a> To establish calibration intervals for all instruments <a> To replace management review and strategic planning <a> To increase production capacity and market share"], "correct_indexes": [0]}, {"question": "A corrective action is initiated after a quality problem has been identified and analyzed. What is the main objective of this action?", "answers": ["To eliminate the root cause and prevent recurrence <a> To improve customer communication and market reputation <a> To simplify operational procedures and documentation systems <a> To reduce manufacturing costs and resource consumption"], "correct_indexes": [0]}, {"question": "Why are standard operating procedures (SOPs) widely used in testing and calibration laboratories?", "answers": ["They ensure consistency and repeatability of activities <a> They replace technical competence and personnel training <a> They eliminate the influence of environmental conditions <a> They reduce the need for measurement traceability"], "correct_indexes": [0]}, {"question": "A company adopts international standards for its products before entering foreign markets. What is the most likely benefit of this decision?", "answers": ["Increased recognition and acceptance in global markets <a> Elimination of product testing and certification requirements <a> Reduction of all production and operational expenses <a> Removal of technical regulations in importing countries"], "correct_indexes": [0]}, {"question": "When evaluating measurement uncertainty, why is statistical analysis frequently applied to repeated measurement results?", "answers": ["To estimate variability and confidence in the results <a> To determine maintenance requirements for instruments <a> To establish legal responsibility for measurement errors <a> To identify manufacturing defects in measurement devices"], "correct_indexes": [0]}, {"question": "A primary standard is maintained by a national metrology institute because it:", "answers": ["Provides the highest level of measurement accuracy available <a> Supports routine production measurements in factories <a> Determines commercial prices for measurement services <a> Performs conformity assessment of industrial products"], "correct_indexes": [0]}, {"question": "Which statement best describes the relationship between standardization and product quality in modern manufacturing industries?", "answers": ["Standardization promotes consistency and quality improvement <a> Standardization increases complexity and process variability <a> Standardization eliminates innovation and technological progress <a> Standardization reduces the importance of customer requirements"], "correct_indexes": [0]}, {"question": "Which instrument combines the functions of T-square, set-squares, scales, and protractor in a single drafting tool?", "answers": ["Instrument box", "Mini-drafter", "French curves", "Divider set"], "correct_indexes": [1]}, {"question": "In the BIS grading system for pencils, which grade is most appropriate for drawing visible outlines and boundary lines?", "answers": ["2H", "HB", "H", "3H"], "correct_indexes": [2]}, {"question": "The standard drawing sheet A0 has a surface area of 1 m². What is the relationship between successive sheet sizes?", "answers": ["Each successive sheet has area reduced by a factor of 3", "Each successive sheet has area halved by dividing along the length", "Each successive sheet has area doubled by adding a strip along the width", "Each successive sheet has area reduced by a factor of 4"], "correct_indexes": [1]}, {"question": "According to BIS specifications, hatching lines on sectioned surfaces should be drawn at which angle to the main outline?", "answers": ["30°", "60°", "45°", "90°"], "correct_indexes": [2]}, {"question": "In engineering drawing, center lines are classified as which type of line?", "answers": ["Continuous wide lines", "Continuous narrow lines with zigzags", "Long-dashed dotted narrow lines", "Dashed narrow lines of short equal dashes"], "correct_indexes": [2]}, {"question": "Which dimensioning method requires non-horizontal dimension lines to be interrupted at the middle for dimension insertion?", "answers": ["Aligned method", "Chain method", "Unidirectional method", "Parallel method"], "correct_indexes": [2]}, {"question": "In the aligned dimensioning method, dimensions on oblique lines should not be placed within which angular zone?", "answers": ["45° zone", "30° zone", "60° zone", "15° zone"], "correct_indexes": [1]}, {"question": "The title block is positioned at which location on a standard engineering drawing sheet?", "answers": ["Top left corner", "Top right corner", "Bottom left corner", "Bottom right corner"], "correct_indexes": [3]}, {"question": "Which pencil grade is recommended for drawing construction lines, dimension lines, and hidden lines?", "answers": ["H", "HB", "B", "2H"], "correct_indexes": [3]}, {"question": "When lettering engineering drawings, horizontal strokes are drawn in which direction according to standard procedure?", "answers": ["Right to left", "Top to bottom", "Left to right", "Bottom to top"], "correct_indexes": [2]}, {"question": "The space between lines in engineering lettering is recommended to be what proportion of the letter height h?", "answers": ["h/2", "3h/4", "h/4", "2h/3"], "correct_indexes": [1]}, {"question": "Which standard letter height (in mm) is used for drawing titles according to BIS recommendations?", "answers": ["3.5 mm", "5 mm", "7 mm", "10 mm"], "correct_indexes": [2]}, {"question": "The Representative Fraction (RF) of a scale is defined as the ratio of what two quantities?", "answers": ["The actual length of the object to the drawing length", "The drawing length to the actual length of the object", "The sheet size to the object size", "The object size to the sheet perimeter"], "correct_indexes": [1]}, {"question": "A plain scale is primarily used to represent which number of measurement units simultaneously?", "answers": ["One unit only", "Two units or a unit and its fraction", "Three successive units", "Four sub-divided units"], "correct_indexes": [1]}, {"question": "Diagonal scales are employed when accurate representation of which number of successive measurement units is required?", "answers": ["Two", "Four", "Three", "Five"], "correct_indexes": [2]}, {"question": "The principle of the diagonal scale is derived from the properties of which geometric concept?", "answers": ["Parallel projection", "Similar triangles", "Concentric circles", "Harmonic division"], "correct_indexes": [1]}, {"question": "In a vernier scale, the Least Count (LC) for a forward vernier is defined as which mathematical expression?", "answers": ["1 msd + 1 vsd", "1 msd × 1 vsd", "1 msd − 1 vsd", "1 vsd − 1 msd"], "correct_indexes": [2]}, {"question": "A backward (retrograde) vernier scale is characterised by which arrangement of its divisions?", "answers": ["Vernier divisions numbered in the same direction as the main scale", "Vernier divisions numbered opposite to the direction of the main scale", "Vernier divisions subdivided into equal halves", "Vernier divisions aligned perpendicular to the main scale"], "correct_indexes": [1]}, {"question": "When a cone is cut by a plane parallel to one of its slant sides (angle α = θ), which conic section is produced?", "answers": ["Ellipse", "Circle", "Hyperbola", "Parabola"], "correct_indexes": [3]}, {"question": "An ellipse is generated when a cone is cut by a plane at angle α that satisfies which angular condition relative to θ and 90°?", "answers": ["α < θ", "α = 0°", "θ < α < 90°", "α = θ"], "correct_indexes": [2]}, {"question": "Eccentricity e > 1 corresponds to which conic section?", "answers": ["Parabola", "Ellipse", "Circle", "Hyperbola"], "correct_indexes": [3]}, {"question": "In the eccentricity method of constructing a parabola, the vertex V is located such that which condition is satisfied?", "answers": ["AV = 2·VF", "AV = VF", "AV = VF/2", "AV = 3·VF"], "correct_indexes": [1]}, {"question": "To draw a tangent to a parabola at a point M located 40 mm from the directrix, which construction step is performed first?", "answers": ["Draw a line from M parallel to the axis", "Join M to F and draw a perpendicular through F to meet the directrix at T", "Bisect the segment MF perpendicularly", "Draw a circle of radius MF centred at the focus"], "correct_indexes": [1]}, {"question": "A cycloid is defined as the locus of a fixed point on the circumference of a circle that rolls without slipping along which type of path?", "answers": ["Another circle on the outside", "Another circle on the inside", "A fixed straight line", "A curved ramp"], "correct_indexes": [2]}, {"question": "In an epicycloid, the generating circle rolls along the outside of the directing circle. The angle θ subtended at the centre O' by arc PA equals which expression?", "answers": ["θ = (R/r) × 360°", "θ = (r/R) × 360°", "θ = (r + R) × 360°", "θ = (r × R) × 360°"], "correct_indexes": [1]}, {"question": "A hypocycloid is the curve traced when the generating circle rolls in which positional relationship to the directing circle?", "answers": ["Outside the directing circle", "Tangent to the directing circle", "Inside the directing circle", "Concentric with the directing circle"], "correct_indexes": [2]}, {"question": "To draw a normal to a cycloid at point M, the centre of the generating circle is located by cutting the centre line with an arc of which radius?", "answers": ["Twice the radius R", "Radius R of the generating circle", "Half the radius R", "The chord length from M to the base"], "correct_indexes": [1]}, {"question": "In the conventional representation of projection, the front view of a point is designated by which notation?", "answers": ["Capital letters (A, B, C)", "Small letters with double dashes (a″, b″)", "Small letters with single dashes (a′, b′)", "Small letters without dashes (a, b)"], "correct_indexes": [2]}, {"question": "The reference line (xy) in orthographic projection simultaneously represents which two reference planes?", "answers": ["The side plane and the auxiliary plane", "The horizontal plane (HP) and the vertical plane (VP)", "The vertical plane (VP) and the profile plane (PP)", "The auxiliary plane and the horizontal plane (HP)"], "correct_indexes": [1]}, {"question": "A point situated above the HP and in front of the VP lies in which quadrant?", "answers": ["Second quadrant", "Third quadrant", "First quadrant", "Fourth quadrant"], "correct_indexes": [2]}, {"question": "When a line is parallel to both the HP and VP, which statement correctly describes its projected views?", "answers": ["Both front and top views show the true length", "Only the front view shows the true length", "Only the top view shows the true length", "Neither view shows the true length"], "correct_indexes": [0]}, {"question": "If a straight line is inclined only to the HP and parallel to the VP, which view shows the true length and true inclination θ?", "answers": ["Top view", "Side view", "Front view", "Auxiliary view"], "correct_indexes": [2]}, {"question": "In the first-angle projection method, the object is positioned in which quadrant relative to the reference planes?", "answers": ["Third quadrant (below HP and behind VP)", "Second quadrant (above HP and behind VP)", "Fourth quadrant (below HP and in front of VP)", "First quadrant (above HP and in front of VP)"], "correct_indexes": [3]}, {"question": "In the first-angle projection arrangement, what is the positional relationship of the top view relative to the front view?", "answers": ["Top view is placed above the front view", "Top view is placed to the right of the front view", "Top view is placed below the front view", "Top view is placed to the left of the front view"], "correct_indexes": [2]}, {"question": "The True Length (TL) of an inclined line can be determined graphically using which auxiliary view technique?", "answers": ["Rotating the front view about the xy line until horizontal", "Projecting onto an auxiliary plane parallel to the line", "Scaling the top view by the cosine of the inclination angle", "Reflecting the side view about the reference line"], "correct_indexes": [1]}, {"question": "The Horizontal Trace (HT) of a plane is defined as the line of intersection of the plane surface with which reference plane?", "answers": ["Vertical plane (VP)", "Profile plane (PP)", "Horizontal plane (HP)", "Auxiliary inclined plane"], "correct_indexes": [2]}, {"question": "When a plane figure is parallel to the HP and perpendicular to the VP, what does its top view reveal?", "answers": ["A straight line parallel to xy", "The true shape of the figure", "A foreshortened ellipse", "A single point on xy"], "correct_indexes": [1]}, {"question": "A plane inclined to the HP and perpendicular to the VP requires how many solution stages in the standard drawing procedure?", "answers": ["Three stages", "One stage", "Four stages", "Two stages"], "correct_indexes": [3]}, {"question": "In Stage 1 of solving a plane inclined to the HP, which initial assumption is made before applying the actual inclination?", "answers": ["The plane is parallel to the VP", "The plane is perpendicular to both reference planes", "The plane is parallel to the HP", "The plane is inclined at 45° to both planes"], "correct_indexes": [2]}, {"question": "A polyhedral solid is distinguished from a solid of revolution by which fundamental geometric characteristic?", "answers": ["Its faces are curved surfaces generated by rotation", "Its volume is bounded exclusively by plane surfaces", "Its cross-sections are always circular", "Its axis passes through a single apex point"], "correct_indexes": [1]}, {"question": "A regular tetrahedron is defined as a polyhedron consisting of how many equilateral triangular faces?", "answers": ["Six", "Eight", "Twelve", "Four"], "correct_indexes": [3]}, {"question": "The axis of a prism is defined as the imaginary line passing through which geometric elements?", "answers": ["The midpoints of all lateral edges", "The centres of the two parallel bases", "The centroids of all rectangular faces", "The vertices of the upper and lower bases"], "correct_indexes": [1]}, {"question": "A frustum of a cone is obtained by removing the portion containing the apex when cut by a plane satisfying which orientation condition?", "answers": ["The cutting plane is parallel to the base", "The cutting plane passes through the axis", "The cutting plane is inclined at 45° to the base", "The cutting plane is perpendicular to a generator"], "correct_indexes": [0]}, {"question": "When the axis of a solid is perpendicular to the HP, which view must be drawn first according to standard projection procedure?", "answers": ["Side view", "Auxiliary view", "Front view", "Top view"], "correct_indexes": [3]}, {"question": "In projecting a solid with its axis inclined to both HP and VP, how many solution stages are typically required?", "answers": ["Two", "One", "Four", "Three"], "correct_indexes": [3]}, {"question": "The isometric projection is characterised by the three isometric axes meeting at a point and forming angles of what magnitude between each pair?", "answers": ["90°", "60°", "120°", "150°"], "correct_indexes": [2]}, {"question": "The isometric scale introduces a reduction factor of approximately 0.815. This factor arises from which geometric relationship?", "answers": ["The cosine of 30° applied to the true axis length", "The ratio of the isometric length to the true length along an inclined axis", "The sine of 45° applied to the projected diagonal", "The tangent of 60° divided by the true length"], "correct_indexes": [1]}, {"question": "In isometric drawing (as opposed to isometric projection), dimensions are measured using which scale?", "answers": ["A scale reduced by the factor 0.815", "True (full) lengths without reduction", "A scale enlarged by the factor 0.815", "A logarithmic scale based on the diagonal"], "correct_indexes": [1]}, {"question": "Non-isometric lines in isometric drawings are lines that satisfy which geometric condition?", "answers": ["They are parallel to one of the three isometric axes", "They represent hidden edges of the solid", "They are not parallel to any of the three isometric axes", "They lie in the isometric plane perpendicular to the observer"], "correct_indexes": [2]}, {"question": "In the Box Method for isometric drawing of objects containing non-isometric lines, the object is assumed to be enclosed in which geometric shape?", "answers": ["A sphere of minimum enclosing radius", "A regular hexahedron regardless of object shape", "A rectangular box touching all extreme vertices", "A cylinder with axis along the primary isometric axis"], "correct_indexes": [2]}, {"question": "To draw an isometric view of a circle, the four-centre approximation method produces an ellipse by constructing arcs from which set of centres?", "answers": ["The four corner vertices of the enclosing rhombus", "Two ends of the minor diagonal and two additional intersection points", "The four midpoints of the sides of the rhombus", "The centre of the rhombus and three equidistant perimeter points"], "correct_indexes": [1]}, {"question": "When drawing an isometric view of a frustum of a pyramid, which feature distinguishes it from the complete pyramid in the isometric representation?", "answers": ["The frustum has no visible apex in the drawing", "The frustum requires a different set of isometric axes", "The frustum uses a circular rather than rectangular base", "The frustum is drawn without the use of isometric scale"], "correct_indexes": [0]}, {"question": "In orthographic projection, what is the fundamental geometric relationship between the projectors and the projection plane?", "answers": ["The projectors are inclined at 45° to the projection plane", "The projectors converge at a single station point", "The projectors are parallel to each other and perpendicular to the plane", "The projectors diverge from a point behind the object"], "correct_indexes": [2]}, {"question": "In third-angle projection, what is the positional relationship between the plane of projection and the object?", "answers": ["The object lies between the observer and the projection plane", "The projection plane lies between the observer and the object", "The observer and the object are on the same side of the plane", "The object is behind both the observer and the projection plane"], "correct_indexes": [1]}, {"question": "Which projection method is standardised for use in most European and Asian countries, including India?", "answers": ["Third-angle projection", "Oblique projection", "First-angle projection", "Perspective projection"], "correct_indexes": [2]}, {"question": "In an orthographic three-view drawing, which view is obtained by projecting the object onto the horizontal plane (HP)?", "answers": ["Front view", "Side view", "Auxiliary view", "Top view"], "correct_indexes": [3]}, {"question": "A section plane cutting perpendicular to the VP and parallel to the HP produces which type of sectional view?", "answers": ["Removed section", "Revolved section", "Horizontal section", "Full section"], "correct_indexes": [2]}, {"question": "The purpose of using a half-section rather than a full section in an engineering drawing is primarily to achieve which goal?", "answers": ["Show the internal features of asymmetric components only", "Reduce drawing time for symmetric objects by showing both interior and exterior simultaneously", "Eliminate the need for hidden lines in the adjacent full view", "Represent the section at a reduced scale to fit the drawing sheet"], "correct_indexes": [1]}, {"question": "In AutoCAD, the ORTHO mode constrains cursor movement to which directions during drawing operations?", "answers": ["45° and 135° only", "Only the horizontal direction", "Horizontal and vertical directions only", "Along polar coordinates at preset angular increments"], "correct_indexes": [2]}, {"question": "The TTR option in AutoCAD's CIRCLE command draws a circle tangent to two objects with a specified value of which parameter?", "answers": ["Diameter", "Area", "Radius", "Circumference"], "correct_indexes": [2]}, {"question": "In AutoCAD, which coordinate input method specifies a point by its angle and distance relative to the previous point?", "answers": ["Absolute coordinates", "Incremental Cartesian coordinates", "Polar coordinates", "Geographic coordinates"], "correct_indexes": [2]}, {"question": "The SNAP mode in AutoCAD serves which primary function during point selection?", "answers": ["Aligns selected objects to the nearest grid intersection point", "Forces the cursor to jump to exact incremental positions", "Snaps the viewport to a predefined zoom level", "Locks dimension lines perpendicular to the selected edge"], "correct_indexes": [1]}, {"question": "Which AutoCAD editing command increases or decreases the length of a selected object without changing its orientation?", "answers": ["Scale", "Stretch", "Explode", "Lengthen"], "correct_indexes": [3]}, {"question": "In AutoCAD, the POLYLINE command differs from the LINE command in that polylines are treated as which type of entity?", "answers": ["A collection of independent line segments", "A single connected object", "A block reference requiring external definition", "A spline approximation requiring control points"], "correct_indexes": [1]}, {"question": "The representative fraction for a map where 5 cm represents 200 km is which value?", "answers": ["1/40,00,000", "1/4,000", "1/400", "1/4,00,000"], "correct_indexes": [0]}, {"question": "In engineering drawing, what distinguishes a dashed narrow line from a long-dashed dotted narrow line in terms of their standard applications?", "answers": ["Dashed lines show cutting plane locations while long-dashed dotted lines show centre lines", "Dashed lines indicate hidden edges while long-dashed dotted lines indicate centre lines", "Both types are interchangeable and differ only in ink width", "Dashed lines represent construction aids while long-dashed dotted lines show surface finish boundaries"], "correct_indexes": [1]}, {"question": "A regular hexagon is most efficiently inscribed in a given circle using which set-square combination?", "answers": ["45°–45° set-square only", "30°–60° set-square", "Protractor and any set-square", "60°–60° equilateral triangle"], "correct_indexes": [1]}, {"question": "When constructing any regular polygon given the side length AB, the vertex B is always joined to which division of the semicircle drawn on AP regardless of the number of sides?", "answers": ["The first division", "The fourth division", "The third division", "The second division"], "correct_indexes": [3]}, {"question": "The eccentricity of an ellipse satisfies which inequality?", "answers": ["e > 1", "e = 0", "0 < e < 1", "e = 1"], "correct_indexes": [2]}, {"question": "In the eccentricity method for drawing a hyperbola with e = 3/2, the vertex V is located at which division of the segment AF?", "answers": ["Third division from A", "Second division from A", "Fourth division from A", "Fifth division from A"], "correct_indexes": [1]}, {"question": "A point situated in the third quadrant is located in which spatial relationship to the two principal planes?", "answers": ["Above HP and behind VP", "Below HP and in front of VP", "Above HP and in front of VP", "Below HP and behind VP"], "correct_indexes": [3]}, {"question": "When projecting a point that lies on both the HP and VP simultaneously, its front view and top view appear at which locations on the projection drawing?", "answers": ["The front view and top view both coincide on the xy reference line", "The front view appears above xy and the top view on xy", "Both views appear as a single point at the origin of xy", "The front view is on xy and the top view is below xy"], "correct_indexes": [0]}, {"question": "The Vertical Trace (VT) of a straight line is the point at which the line (or its extension) meets which reference plane?", "answers": ["The profile plane (PP)", "The horizontal plane (HP)", "The vertical plane (VP)", "An auxiliary inclined plane"], "correct_indexes": [2]}, {"question": "A 75 mm line AB has its top view measuring 65 mm and front view measuring 50 mm. What can be deduced about the line's spatial orientation?", "answers": ["The line is parallel to both HP and VP", "The line is inclined to both HP and VP simultaneously", "The line is inclined to HP and parallel to VP", "The line is perpendicular to the profile plane"], "correct_indexes": [1]}, {"question": "For a line inclined at 45° to the HP with its front view making 60° with VP, the true length is given to be 90 mm. Which projection technique is used to find the true inclination with VP?", "answers": ["Rotating the front view until it aligns with xy", "Auxiliary plane method parallel to the line", "Projecting the top view onto a plane perpendicular to the line", "Scaling the front view projection by the secant of the inclination"], "correct_indexes": [1]}, {"question": "When a hexagonal plane has its surface perpendicular to the HP and inclined at 45° to the VP, in which view does the surface appear as a straight line?", "answers": ["Side view", "Auxiliary view", "Top view", "Front view"], "correct_indexes": [2]}, {"question": "A semicircular plate suspended from a point on its straight edge will always maintain its surface in which positional relationship with the HP?", "answers": ["Parallel to the HP at a fixed height", "Inclined at 45° to the HP", "Perpendicular to the HP", "Inclined at 30° to the HP"], "correct_indexes": [2]}, {"question": "In projection of planes, an oblique plane is defined as a plane whose surface is inclined in which manner relative to the two principal reference planes?", "answers": ["Inclined to both HP and VP simultaneously", "Perpendicular to HP and parallel to VP", "Parallel to HP and inclined to VP", "Perpendicular to both HP and VP"], "correct_indexes": [0]}, {"question": "A regular icosahedron is composed of how many equilateral triangular faces?", "answers": ["Eight", "Twelve", "Four", "Twenty"], "correct_indexes": [3]}, {"question": "A dodecahedron is a regular polyhedron bounded by how many regular pentagonal faces?", "answers": ["Eight", "Twelve", "Six", "Twenty"], "correct_indexes": [1]}, {"question": "The apex of a pyramid is defined as the point where which geometric elements converge?", "answers": ["All isosceles triangular lateral faces", "The diagonal of the base polygon", "The edges of the base polygon", "The rectangular faces of the prism"], "correct_indexes": [0]}, {"question": "For a cone resting on one of its generators on the HP, the initial assumption in the two-stage projection method is that the cone is positioned in which orientation?", "answers": ["With its axis horizontal and perpendicular to VP", "With its base on the VP", "With its apex touching the HP", "Standing upright with its base on the HP"], "correct_indexes": [3]}, {"question": "When a cube is positioned so that a body diagonal is parallel to the HP and perpendicular to the VP, how many stages are required to obtain the complete projections?", "answers": ["One stage", "Four stages", "Three stages", "Two stages"], "correct_indexes": [2]}, {"question": "In the isometric view of a composite solid consisting of a sphere resting on a square block, the sphere is represented using which geometric approximation?", "answers": ["A circle with radius equal to the isometric radius", "An ellipse constructed by the four-centre method", "A true circle drawn with the isometric scale factor applied", "A regular hexagon inscribed within the enclosing square"], "correct_indexes": [2]}, {"question": "The Off-Set Method for drawing non-isometric lines in isometric projections involves which fundamental construction principle?", "answers": ["Enclosing the object in a rectangular box and locating all contact points", "Drawing lines parallel to isometric axes from each reference corner to locate the endpoint", "Projecting true-length lines onto the nearest isometric plane", "Rotating the object until all edges align with isometric axes"], "correct_indexes": [1]}, {"question": "In AutoCAD, the GRID mode serves which primary purpose in the drawing environment?", "answers": ["Enforces exact spacing between geometric entities", "Provides a visual reference pattern of dots or lines on screen", "Constrains the cursor to move only in orthogonal directions", "Automatically generates dimension lines at grid intersections"], "correct_indexes": [1]}, {"question": "The ELLIPSE command in AutoCAD constructs an ellipse by requiring the specification of which minimum geometric parameters?", "answers": ["Centre, major axis length, and eccentricity value", "Two foci and a point on the ellipse", "Axis endpoints and the other axis half-length", "Bounding rectangle dimensions and rotation angle"], "correct_indexes": [2]}, {"question": "In the hexagonal nut drawing procedure, the across-flats dimension is typically taken as which multiple of the bolt diameter D?", "answers": ["1.0 D", "2.0 D", "0.5 D", "1.5 D"], "correct_indexes": [3]}, {"question": "Foundation bolts, such as the rag bolt and Lewis bolt, are specifically designed for which application in engineering assembly?", "answers": ["Fastening flanged pipe couplings under pressure", "Securing machinery to concrete or masonry foundations", "Joining wooden structural members with large contact area", "Connecting shafts in muff coupling assemblies"], "correct_indexes": [1]}, {"question": "A stud bolt differs from a standard hexagonal bolt in which primary constructional aspect?", "answers": ["A stud bolt has a hexagonal head at both ends", "A stud bolt is threaded at both ends without a bolt head", "A stud bolt uses left-hand threads for all standard applications", "A stud bolt has a square cross-section along its shank"], "correct_indexes": [1]}, {"question": "Spring washers are employed in nut locking arrangements to achieve which specific functional objective?", "answers": ["Distribute the load evenly across a larger bearing surface", "Prevent loosening by creating a friction-based locking force", "Align the bolt axis perpendicular to the mating surface", "Provide electrical insulation between the fastener and component"], "correct_indexes": [1]}, {"question": "The ARC command in AutoCAD can be used to draw an arc by specifying the start point, end point, and which additional parameter?", "answers": ["The arc's central angle only", "The chord length only", "Various options including radius, included angle, or direction", "Only the midpoint of the arc"], "correct_indexes": [2]}, {"question": "When constructing an isometric view of a cylinder, the circular base appears in the isometric drawing as which shape?", "answers": ["A regular hexagon approximation", "A true circle of the same diameter", "A rectangle with rounded corners", "An ellipse approximated by the four-centre method"], "correct_indexes": [3]}, {"question": "A plane figure that has its surface inclined to the HP is initially assumed to be parallel to the HP in Stage 1. In Stage 2, which projection is tilted to the given angle?", "answers": ["The top view is tilted and the front view is re-projected", "The side view is tilted and both principal views are re-projected", "The front view is tilted and the top view is re-projected", "Both views are simultaneously rotated about xy"], "correct_indexes": [2]}, {"question": "When the axis of a solid is parallel to both HP and VP simultaneously, the solid is described as resting in which specific positional condition?", "answers": ["On its apex with axis horizontal", "On one of its lateral faces with axis horizontal", "On its base with axis vertical", "Suspended freely from a corner"], "correct_indexes": [1]}, {"question": "In the construction of a parabola using the eccentricity method, the line VE drawn perpendicular to the axis at vertex V is made equal to which length?", "answers": ["2·VF", "VF", "AF", "VF/2"], "correct_indexes": [1]}, {"question": "Which type of scale construction is required to read distances accurately to two decimal places of a given unit?", "answers": ["Plain scale", "Vernier scale", "Comparative scale", "Chord scale"], "correct_indexes": [1]}, {"question": "The SCALE command in AutoCAD scales a selected object relative to which reference?", "answers": ["The absolute origin of the coordinate system", "A user-specified base point", "The geometric centroid of the selected object", "The nearest grid intersection point"], "correct_indexes": [1]}, {"question": "In the projection of a point above the HP and behind the VP (second quadrant), its front view appears above xy and its top view appears in which position?", "answers": ["Below xy", "On xy", "Above xy", "To the right of the front view"], "correct_indexes": [2]}, {"question": "When the projectors of the ends of a line AB are given as 5 cm apart on the reference plane, this distance represents which spatial measurement?", "answers": ["The true length of the line AB", "The distance between the end projectors (horizontal distance)", "The vertical height difference between ends A and B", "The diagonal of the bounding rectangle in the front view"], "correct_indexes": [1]}, {"question": "In CoppeliaSim, what is the primary purpose of defining a kinematic chain?", "answers": ["To render 3D textures on a robotic model", "To simulate fluid dynamics around the robot", "To calculate and simulate the motion of interconnected links", "To establish network connection with external software"], "correct_indexes": [2]}, {"question": "Which feature allows you to visualize the detection rays of a proximity sensor during simulation?", "answers": ["Enabling the \"Show volume\" option", "Activating the physics engine debugger", "Using a vision sensor instead", "Writing a custom OpenGL rendering script"], "correct_indexes": [0]}, {"question": "How is a proximity sensor typically configured to detect objects like a moving cart in CoppeliaSim?", "answers": ["By attaching a vision-processing script directly to the moving cart", "By defining a detection volume and verifying intersections with collidable shapes", "By measuring the Wi-Fi signal strength of nearby simulated devices", "By checking whether the cart enters a predefined sensor detection region"], "correct_indexes": [1]}, {"question": "What is the function of the scene hierarchy in CoppeliaSim?", "answers": ["To define the parent-child relationships", "To list chronological order of object creation", "To sort objects by their mass and density", "To manage software's plugin dependencies"], "correct_indexes": [0]}, {"question": "When simulating a distance-based cart automation, which sensor parameter defines the maximum detection range?", "answers": ["Sensor resolution", "Refresh rate", "Detection volume along the Z-axis", "Joint torque limit"], "correct_indexes": [2]}, {"question": "In CoppeliaSim, what is a dummy object primarily used for?", "answers": ["To replace missing 3D meshes", "To act as a static obstacle for collision detection", "To serve as a reference frame, orientation marker, or IK target", "To write Lua scripts without attaching it to physical objects"], "correct_indexes": [2]}, {"question": "To make an automated cart move strictly, which object is typically used as the path definition?", "answers": ["A path object consisting of control points", "A sequence of proximity sensors", "A dynamically generated 3D mesh", "A revolute joint"], "correct_indexes": [0]}, {"question": "Which of the following physics engines is not included with CoppeliaSim by default?", "answers": ["Bullet", "Open Dynamics Engine (ODE)", "Havok Physics", "Newton Dynamics"], "correct_indexes": [2]}, {"question": "What type of script is attached directly to a specific object in the CoppeliaSim scene?", "answers": ["Main script", "Child script", "Add script", "Plugin script"], "correct_indexes": [1]}, {"question": "How do you establish a parent-child relationship between a robotic arm base and its first joint?", "answers": ["By writing a Python integration script", "By dragging and dropping the joint onto the base", "By grouping the objects in the 3D view", "By using the \"Connect\" tool in the engine"], "correct_indexes": [1]}, {"question": "When configuring a proximity sensor, what does the \"Detection volume\" represent?", "answers": ["The physical size of the sensor housing", "The 3D space, where sensor can detect collidable entities", "The memory allocated to the sensor's script", "The noise level of the sensor"], "correct_indexes": [1]}, {"question": "What is the role of an Inverse Kinematics <IK> group in CoppeliaSim?", "answers": ["To calculate total mass of a robotic arm", "To compute the required angles to reach a specific position", "To render complex lighting effects on moving parts", "To simulate electrical power consumption of the motors"], "correct_indexes": [1]}, {"question": "Which property must be enabled for a 3D shape to bump into other objects?", "answers": ["Renderable", "Measurable", "Collidable", "Detectable"], "correct_indexes": [2]}, {"question": "In the context of a robotic arm simulation, what does a \"prismatic joint\" do?", "answers": ["It provides linear sliding movement along the single axis", "It provides rotational movement around a single axis", "It allows free movement in all directions", "It locks the objects in place permanently"], "correct_indexes": [0]}, {"question": "How are Lua scripts primarily utilized in CoppeliaSim?", "answers": ["To design the 3D meshes of the robots", "To configure the network firewall settings", "To control object behavior, sensor reading and etc", "To export the scene to a video file"], "correct_indexes": [2]}, {"question": "What is the purpose of the \"Bounding Box\" of a shape in CoppeliaSim?", "answers": ["To provide a simplified geometric representation", "To change the color of the object", "To prevent the object from being deleted", "To define the object's center of mass"], "correct_indexes": [0]}, {"question": "When automating a cart's movement, which API function is commonly used to read the proximity sensor?", "answers": ["sim.getJointPosition", "sim.readProximitySensor", "sim.getObjectVelocity", "sim.checkCollision"], "correct_indexes": [1]}, {"question": "What defines the base of a kinematic chain in CoppeliaSim?", "answers": ["The object with the highest mass", "The last child in the hierarchy", "The root object where sequence of joints begins", "The dummy object placed at the origin"], "correct_indexes": [2]}, {"question": "What is a \"Vision sensor\" used for in contrast to a proximity sensor?", "answers": ["To detect only the distance to the nearest object", "To capture information like color, depth, and images", "To measure the ambient temperature of the scene", "To simulate wireless communication"], "correct_indexes": [1]}, {"question": "What is the default simulation time step size for physics calculations in CoppeliaSim?", "answers": ["1 ms", "10 ms", "50 ms", "100 ms"], "correct_indexes": [2]}, {"question": "Which joint mode should be selected if you want to control a joint using a PID position controller?", "answers": ["Passive mode", "Kinematic mode", "Torque or force mode", "Motion mode"], "correct_indexes": [2]}, {"question": "What is the difference between a \"Pure Shape\" and a \"Random Shape\" in CoppeliaSim?", "answers": ["Pure shapes have optimized, geometry for physics computation", "Random shapes cannot be moved during simulation", "Random shapes cannot have textures applied to them", "Random shapes are automatically generated by AI"], "correct_indexes": [0]}, {"question": "What happens if a shape in CoppeliaSim is set as \"Respondable\" but NOT \"Collidable\"?", "answers": ["It will generate collision signals", "It will physically collide with other respondable shapes", "It will pass through all objects without any interaction", "It will cause the simulation to crash immediately"], "correct_indexes": [1]}, {"question": "What function is used to fetch numerical handle in a CoppeliaSim child script?", "answers": ["sim.findObject()", "sim.getObjectHandle()", "sim.getObjectName()", "sim.linkObject()"], "correct_indexes": [1]}, {"question": "In CoppeliaSim, what is a \"Non-threaded child script\"?", "answers": ["A script made in simulation thread, synchronous with the simulation", "A script that runs in the background and never stops", "A script written in C++ instead of Lua", "A script used exclusively for networking"], "correct_indexes": [0]}, {"question": "What object type is specifically used to measure Forces between two connected links?", "answers": ["Proximity sensor", "Gyroscope", "Force sensor", "Accelerometer"], "correct_indexes": [2]}, {"question": "How can you pass custom numerical or string data between different child scripts in CoppeliaSim?", "answers": ["By using global C++ variables", "By setting simulation signals (e.g., sim.setFloatSignal)", "By writing data into an external text file", "By restarting the simulation loop"], "correct_indexes": [1]}, {"question": "What file extension is used when saving an individual robot model as a reusable asset in CoppeliaSim?", "answers": [".mmm", ".ttm", ".lua", ".obj"], "correct_indexes": [1]}, {"question": "What parameter must be configured in a shape's properties to prevent a heavy robot component from floating away?", "answers": ["Position matrix", "Visual transparency", "Mass, inertia matrix", "Texture scaling"], "correct_indexes": [2]}, {"question": "Which proximity sensor type uses a Сone-shaped volume for detection?", "answers": ["Ray type", "Cone type", "Randomized type", "Cylinder type"], "correct_indexes": [1]}, {"question": "What is the purpose of the \"Graph\" object in CoppeliaSim?", "answers": ["To design custom 2D flowcharts for the robot's logic", "To plot and visualize simulation variables over time, such as velocity", "To display the hierarchical tree structure of the workspace", "To manage internet connections to external databases"], "correct_indexes": [1]}, {"question": "In an Inverse Kinematics task, what is the \"Tip\" object?", "answers": ["The object representing the end-effector that reaches goal", "A helpful pop up window explaining the tool", "The base of the robotic arm manipulator", "The sensor used to detect target objects"], "correct_indexes": [0]}, {"question": "What happens if you uncheck the \"Simulation agile\" property for an object?", "answers": ["The object becomes invisible", "The object cannot be selected using the mouse pointer", "The object ignores physics calculations and remains static", "The object changes its color to red"], "correct_indexes": [2]}, {"question": "Which API function is used to change the Target velocity of a wheel joint in a dynamic simulation?", "answers": ["sim.setJointPosition", "sim.setJointTargetVelocity", "sim.readJointVelocity", "sim.addJointForce"], "correct_indexes": [1]}, {"question": "What type of script runs once when the application starts and can monitor the entire CoppeliaSim workspace lifecycle?", "answers": ["Child script", "Main script", "Add-on script", "Custom script"], "correct_indexes": [2]}, {"question": "What is a \"Threaded child script\" in CoppeliaSim?", "answers": ["A script that cannot be paused by the system", "A script that can use blocking functions like sim.wait()", "A script used to sew virtual fabric onto text models", "A script restricted to running on multi core process"], "correct_indexes": [1]}, {"question": "How do you adjust the global ambient lighting conditions of a scene?", "answers": ["By modifying script of the robot base", "Through the environment dialog settings", "By increasing power parameters", "By rendering the scene with plugin"], "correct_indexes": [1]}, {"question": "What is the function of the \"Model\" flag in an object's properties?", "answers": ["It groups a hierarchy into a single selectable compound object", "It converts a 2D drawing into a 3D surface mesh", "It enables high-fidelity ray tracing for reflections", "It locks the object from being edited by scripts"], "correct_indexes": [0]}, {"question": "What is the default programming language natively used for writing scripts inside CoppeliaSim?", "answers": ["Python", "C++", "LUA", "MatLab"], "correct_indexes": [2]}, {"question": "Which component is needed to calculate contact points and impact forces when a cart hits a wall?", "answers": ["Vision sensor filter", "Physics engine calculation module", "Kinematic solver group", "Linear path control point"], "correct_indexes": [1]}, {"question": "What does the \"Renderable\" property do when assigned to an object?", "answers": ["It allows the physics engine to calculate its weight", "It makes the object visible to human eyes and vision sensors during simulation", "It allows the object to be exported to a 3D printer format", "It enables automatic script execution on startup"], "correct_indexes": [1]}, {"question": "What is the target object in an Inverse Kinematics setup?", "answers": ["The base anchor of the kinematic chain", "The object that records sensor outputs", "A dummy object that the end-effector (tip) tries to track", "The heavy load attached to a dynamic cart"], "correct_indexes": [2]}, {"question": "In CoppeliaSim, how do you change the color of a pure geometric shape?", "answers": ["By rewriting its initialization script", "By opening the shape's visual properties, modifying its color component", "By increasing the ambient light source intensity", "By changing the physics engine from ODE to Bullet"], "correct_indexes": [1]}, {"question": "What is the direct consequence of a script error in a non-threaded child script?", "answers": ["The script stops executing for that frame, and an error message appears", "The entire operating system restarts immediately", "The robot model is deleted from the workspace automatically", "The simulation speed doubles to bypass the error"], "correct_indexes": [0]}, {"question": "What function can determine the distance between two distinct shapes in a simulation without physical collision?", "answers": ["sim.readproximitysensor", "sim.CheckDistance", "sim.getobjectmatrix", "sim.getjointforce"], "correct_indexes": [1]}, {"question": "What does \"IK Resolution\" mean in a robotic arm configuration?", "answers": ["The pixel density of the camera feed", "The maximum angular velocity of the base joint", "The process of calculating joint positions to achieve pose", "The manufacturing precision of the physical links"], "correct_indexes": [2]}, {"question": "How can you temporarily stop a simulation run without losing the current positions of the objects?", "answers": ["By closing the workspace window", "By clicking the stop button", "By clicking the Pause button", "By disabling the physics engine plugin"], "correct_indexes": [2]}, {"question": "What feature allows CoppeliaSim to communicate with external applications like Python or MATLAB?", "answers": ["Internal Lua tables", "The Remote API or ZeroMQ-based API", "Standard video streams", "Serial cables connected to motherboard"], "correct_indexes": [1]}, {"question": "Which shape type represents a standard box in CoppeliaSim?", "answers": ["Cuboid", "Pure cylinder", "Mesh convex", "Heightfield surface"], "correct_indexes": [0]}, {"question": "What happens if you apply a very large force to a joint that has low maximum torque configured?", "answers": ["The joint moves at infinite speed", "The joint breaks into pieces physically", "The joint movement stalls because torque is at the maximum limit", "The physics engine switches to kinematic mode"], "correct_indexes": [2]}, {"question": "What tool helps align objects precisely along coordinate axes in the 3D viewport?", "answers": ["Scene hierarchy drag-and-drop", "The Position/Orientation manipulation dialogs", "The script editor search bar", "The console message logger"], "correct_indexes": [1]}, {"question": "What happens if you scale a model down to zero mass?", "answers": ["It falls down instantly under gravity", "It generates infinite friction forces", "It becomes a static or kinematically controlled", "It disappears from the hierarchy tree"], "correct_indexes": [2]}, {"question": "What determines how deep two solid respondable objects can penetrate each other?", "answers": ["Texture mapping factor", "Proximity threshold", "Constraint solver error or settings", "Vision sensor focal length"], "correct_indexes": [2]}, {"question": "Which UI component displays errors, prints, and status messages during execution?", "answers": ["Scene hierarchy view", "Bottom console or status bar area", "Top toolbar panel", "Object properties window"], "correct_indexes": [1]}, {"question": "Why usually is heat shrink tubing preferred over electrical tape?", "answers": ["It conducts electricity better", "It is easier to remove later", "It provides a more permanent, secure, and insulation", "It lowers the resistance of the soldered joint"], "correct_indexes": [2]}, {"question": "What is the ideal appearance of a good through-hole solder joint?", "answers": ["Dull and crystalline", "A large, round blob sitting on the pad", "Shiny, smooth, and concave like a volcano", "Dark and charred"], "correct_indexes": [2]}, {"question": "Which flux type is generally recommended for electronic circuit board soldering?", "answers": ["Acid flux", "Rosin or no-clean Flux", "Plumbing flux", "Borax flux"], "correct_indexes": [1]}, {"question": "What is the primary purpose of flux in the soldering process?", "answers": ["To increase the melting temperature of the solder", "To physically hold the components in place", "To remove oxidation and prevent new oxidation during heating", "To cool down the joint faster"], "correct_indexes": [2]}, {"question": "When preparing wires to be routed inside a compact casing, what does \"tinning\" mean?", "answers": ["Coating the wire in tin foil", "Applying some solder to the stripped wire strands", "Cutting the wire to the exact length needed", "Stripping the insulation off the wire"], "correct_indexes": [1]}, {"question": "What happens if the soldering iron is too cold when attempting to join two wires?", "answers": ["The solder flows too quickly and bridges connections", "The wire insulation melts immediately", "The solder will not melt properly, leading to a weak \"cold joint\"", "The flux will ignite"], "correct_indexes": [2]}, {"question": "Which alloy composition was traditionally most common for electronics soldering before RoHS regulations?", "answers": ["99% Tin, 1% Copper", "60% Tin, 40% Lead (or 63/37)", "50% Silver, 50% Copper", "100% Lead"], "correct_indexes": [1]}, {"question": "What characterizes a \"cold solder joint\"?", "answers": ["A dull, grainy appearance with poor electrical connection", "A joint that was cooled artificially with compressed air", "A joint that uses only silver solder", "A perfect, shiny, concave connection"], "correct_indexes": [0]}, {"question": "When soldering sensitive electronic components, what is the best practice to prevent heat damage?", "answers": ["Use the highest possible temperature to finish quickly", "Solder in a cold room", "Use a heat sink clip on the component's lead and solder quickly", "Apply a thick layer of flux over the entire component"], "correct_indexes": [2]}, {"question": "What tool is most appropriate for removing excess solder from a PCB?", "answers": ["A pair of pliers", "Solder wick (desoldering braid)", "A damp paper towel", "A metal file"], "correct_indexes": [1]}, {"question": "Why is it important to clean the soldering iron tip frequently with a brass wire sponge?", "answers": ["To sharpen the tip for finer work", "To remove oxidized solder and flux residue", "To cool the tip down between joints", "To apply a new layer of copper to the tip"], "correct_indexes": [1]}, {"question": "When splicing two wires together to hide them within a housing, which splice offers excellent mechanical strength before soldering?", "answers": ["Butt splice", "Lap splice", "Lineman's splice", "Twist splice"], "correct_indexes": [2]}, {"question": "What is the typical recommended temperature range for soldering standard lead-free electronics?", "answers": ["100°C - 200°C", "200°C - 300°C", "300°C - 350°C", "400°C - 500°C"], "correct_indexes": [2]}, {"question": "Which harmful substance is commonly extracted by fume extractors during the electronics soldering process?", "answers": ["Lead vapor", "Vaporized flux fumes", "Ozone gas", "Carbon monoxide"], "correct_indexes": [1]}, {"question": "When soldering a multi-pin connector, what is a good technique to prevent melting the plastic housing?", "answers": ["Solder all pins simultaneously using a heat gun", "Leave the soldering iron on the pin for at least 10 seconds", "Plug it into a mating connector to act as a heat sink and keep pins aligned", "Only use acid-core solder"], "correct_indexes": [2]}, {"question": "What is \"solder bridging\"?", "answers": ["Connecting two wires with a mechanical clamp", "An unintended solder connection across two pads", "The process of applying flux to a surface", "Building a physical support structure out of solder"], "correct_indexes": [1]}, {"question": "What is the function of a soldering \"third hand\" tool?", "answers": ["To automatically feed solder into joint", "To measure the temperature of the iron", "To hold the wires or components steady", "To extract toxic fumes"], "correct_indexes": [2]}, {"question": "Why should you avoid blowing on a solder joint to cool it down?", "answers": ["It blows away the flux prematurely", "Uneven and rapid cooling can cause micro-fractures", "The moisture from breath causes instant oxidation", "It makes the solder un-meltable in the future"], "correct_indexes": [1]}, {"question": "What is the defining characteristic of a \"rosin core\" solder?", "answers": ["It contains a solid iron core for strength", "It has hollow center filled with flux to aid soldering process", "It requires a separate blowtorch to melt", "It is used strictly for plumbing pipes"], "correct_indexes": [1]}, {"question": "When securing soldered wires inside a custom casing, why is proper strain relief important?", "answers": ["To increase the electrical resistance of the wire", "To make the wire look aesthetically pleasing", "To prevent mechanical stress from pulling solder joint", "To cool down the wire during operation"], "correct_indexes": [2]}, {"question": "What does the term \"eutectic alloy\" mean in the context of solder?", "answers": ["An alloy composition that changes from completely solid to liquid", "An alloy that expands when frozen", "A solder blend that requires zero heat to bond", "A mixture of gold and plastics used for high-voltage isolation"], "correct_indexes": [0]}, {"question": "What is the melting point of standard eutectic Sn63/Pb37 solder?", "answers": ["100°C", "150°C", "183°C", "250°C"], "correct_indexes": [2]}, {"question": "What is the primary risk of using too much solder on a PCB pad?", "answers": ["It lowers the voltage of the circuit", "It creates a bulbous joint that hides poor wetting errors", "It dissolves the copper trace completely", "It generates electromagnetic interference"], "correct_indexes": [1]}, {"question": "What problem is caused by \"pad lifting\"?", "answers": ["Component stands up vertically on the board", "Solder flows onto the wrong side of the board", "The copper trace separates mechanically from substrate", "Board becomes completely immune to heat damage"], "correct_indexes": [2]}, {"question": "Why must acid core solder never be used for delicate electronics work?", "answers": ["The acid residue is corrosive and will destroy copper traces", "It doesn't melt at temperatures below 500°C", "It has an extremely bright neon color", "It reduces the structural strength of plastic components"], "correct_indexes": [0]}, {"question": "What is the primary purpose of \"tinning\" a soldering iron tip?", "answers": ["To make the tip look shiny and decorative", "To reduce the total electrical current consumed by the station", "To protect the tip from oxidation, facilitate optimal heat transfer to joint", "To completely sharpen the tip edge"], "correct_indexes": [2]}, {"question": "What tool should be used to shrink heat-shrinkable tubing evenly over a fresh splice?", "answers": ["Lighter flame held tightly against the plastic", "High-power laser pointer", "Controlled heat gun or specialized hot air rework tip", "Pliers compressed with brute force"], "correct_indexes": [2]}, {"question": "What is an intermetallic layer in a solder joint?", "answers": ["The chemical bond zone formed between copper pad and solder alloy", "A protective sheet placed over the workbench surface", "A outer plastic jacket of insulated wires", "A specialized layer of paste used to isolate ground pins"], "correct_indexes": [0]}, {"question": "What happens if a worker moves a component lead while the solder joint is in the process of solidifying?", "answers": ["The joint will cool down twice as fast", "A fractured, mechanically weak joint structure is created", "The solder will evaporate instantly", "The flux becomes trapped inside silicon component"], "correct_indexes": [1]}, {"question": "Why is isopropyl alcohol (IPA) used after completing a soldering assembly?", "answers": ["To lubricate moving joint connections", "To clean off sticky, unsightly flux residues that could attract dust", "To add a shiny conductive coating to the copper pads", "To reduce the resistance of internal copper wires"], "correct_indexes": [1]}, {"question": "Which problem does a \"solder ball\" cause if left loose inside an automation device housing?", "answers": ["It decreases the overall operating weight of the chassis", "It increases the power consumption of internal logic gates", "It can roll around and create intermittent electrical short circuits", "It blocks wireless signal transmissions"], "correct_indexes": [2]}, {"question": "What is the main structural component of standard PCB substrate boards?", "answers": ["Extruded aluminum sheets", "FR-4 fiberglass material layered with copper foil", "Pure silicon crystals", "Flexible rubber insulation mats"], "correct_indexes": [1]}, {"question": "What hand tool cuts stripped wire lengths cleanly without crushing the internal metal structure?", "answers": ["Heavy steel hammer", "Flathead screwdriver", "Flush-cut side cutters", "Clamping pliers"], "correct_indexes": [2]}, {"question": "What danger is avoided by wearing safety glasses while soldering?", "answers": ["Flying wire clipping shards and hot flux splatter droplets hitting the eyes", "High levels of ionizing radiation from the iron heater core", "Toxic gas blinding effects caused by leaded wire coatings", "Intense blue UV light flashes from melting metal alloys"], "correct_indexes": [0]}, {"question": "What process describes dipping a stripped stranded wire tip into a hot solder pot?", "answers": ["Thermal tempering", "Mechanical crimping", "Pot Tinning", "Acid etching"], "correct_indexes": [2]}, {"question": "Why do large copper planes on a circuit board require longer heating times during soldering?", "answers": ["They repel solder because of their chemical composition", "They act as massive heat sinks, rapidly drawing energy away", "They possess higher electrical voltage potentials", "They are covered in heavy layers of factory grease"], "correct_indexes": [1]}, {"question": "What is the standard classification format for wire thicknesses used in electronic hardware design?", "answers": ["Metric celsius standard scale (MCS)", "Newton meter pressure rating (NMP)", "American Wire Gauge (AWG) system", "International ohm index (IOI)"], "correct_indexes": [2]}, {"question": "What is the function of a desoldering pump <solder sucker>?", "answers": ["To vacuum up liquefied solder from joint using piston", "To blow cool air onto a joint to freeze it in place", "To pump fresh liquid flux onto corroded copper pad", "To strip insulation materials from solid-core cables"], "correct_indexes": [0]}, {"question": "What type of ESD protection device should be worn on the wrist when assembling microelectronics?", "answers": ["Rubber insulating bracelet", "Magnetic field dampening wristband", "Anti-Static grounding wrist strap", "Copper heat dissipating cuff link"], "correct_indexes": [2]}, {"question": "What artifact can occur if you use an excessively wide chisel tip on a tiny surface-mount component pad?", "answers": ["The pad area will freeze immediately", "Heat will spill over, accidentally melting adjacent pins", "The copper trace will convert into zinc alloy", "The iron heater element will short out internally"], "correct_indexes": [1]}, {"question": "What defines a \"dry joint\"?", "answers": ["A joint made completely without using cleaners", "A faulty joint where the solder failed to wet the metal lead", "A perfect connection intended for desert environments", "A joint wrapped in waterproof plastic enclosures"], "correct_indexes": [1]}, {"question": "What property changes significantly when moving from leaded solder wire to lead-free alternatives?", "answers": ["The required melting temperature increases substantially", "The solder becomes completely translucent", "The core is filled with water instead of rosin resin", "The material turns highly magnetic"], "correct_indexes": [0]}, {"question": "What mechanism describes solder flowing into tight gaps against gravity between a stranded wire and a crimp terminal?", "answers": ["Centrifugal acceleration", "Magnetic induction attraction", "Capillary action driven by surface tension forces", "Electrostatic precipitation alignment"], "correct_indexes": [2]}, {"question": "What risk is directly minimized by routing internal wires through custom channels or enclosures inside a mechanical machine chassis?", "answers": ["The total current rating of the device is reduced", "Mechanical damage, pinches, and abrasions", "The wire resistance increases excessively over time", "The microcontroller memory faces corruption from vibration"], "correct_indexes": [1]}, {"question": "What designator standard governs electronic assembly quality globally?", "answers": ["ISO 9001 software guidelines", "IEEE 802.11 wireless standard", "IPC-A-610 electronic assembly acceptability metrics", "DIN 40050 waterproof index"], "correct_indexes": [2]}, {"question": "In Arduino programming, what is the purpose of the setup<> function?", "answers": ["To run the main logic loop continuously", "For initializing variables, pin modes, and libraries", "To reset the microcontroller when an error occurs", "To define custom mathematical functions"], "correct_indexes": [1]}];
+    const search = document.getElementById('search');
+    const list = document.getElementById('list');
+    const total = document.getElementById('total');
+    const shown = document.getElementById('shown');
+    const showAllBtn = document.getElementById('showAll');
+    const onlyCorrectBtn = document.getElementById('onlyCorrect');
+
+    let onlyCorrect = false;
+
+    function escapeHTML(str) {
+      return String(str).replace(/[&<>"']/g, s => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      }[s]));
+    }
+
+    function highlight(text, query) {
+      const safe = escapeHTML(text);
+      const q = query.trim();
+      if (!q) return safe;
+      const words = q.split(/\s+/).filter(Boolean).map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      if (!words.length) return safe;
+      const re = new RegExp('(' + words.join('|') + ')', 'gi');
+      return safe.replace(re, '<mark>$1</mark>');
+    }
+
+    function normalize(s) {
+      return String(s).toLowerCase().replace(/ё/g, 'е');
+    }
+
+    function render() {
+      const q = search.value.trim();
+      const nq = normalize(q);
+      const filtered = DATA.filter(item => {
+        if (!nq) return true;
+        const blob = normalize(item.question + ' ' + item.answers.join(' '));
+        return nq.split(/\s+/).every(word => blob.includes(word));
+      });
+
+      total.textContent = 'Всего вопросов: ' + DATA.length;
+      shown.textContent = 'Показано: ' + filtered.length;
+
+      if (!filtered.length) {
+        list.innerHTML = '<div class="empty">Ничего не найдено. Попробуй другое слово или часть слова.</div>';
+        return;
+      }
+
+      list.innerHTML = filtered.map((item, idx) => {
+        const originalNumber = DATA.indexOf(item) + 1;
+        const answers = item.answers.map((a, i) => {
+          const isCorrect = item.correct_indexes.includes(i);
+          if (onlyCorrect && !isCorrect) return '';
+          return `<div class="answer ${isCorrect ? 'correct' : ''}">${isCorrect ? '✅ ' : ''}${highlight(a, q)}</div>`;
+        }).join('');
+
+        return `<section class="card">
+          <div class="qtop">
+            <div class="num">#${originalNumber}</div>
+            <div class="question">${highlight(item.question, q)}</div>
+          </div>
+          <div class="answers">${answers}</div>
+        </section>`;
+      }).join('');
+    }
+
+    search.addEventListener('input', render);
+    showAllBtn.addEventListener('click', () => {
+      search.value = '';
+      onlyCorrect = false;
+      onlyCorrectBtn.textContent = 'Только правильные ответы';
+      render();
+      search.focus();
+    });
+    onlyCorrectBtn.addEventListener('click', () => {
+      onlyCorrect = !onlyCorrect;
+      onlyCorrectBtn.textContent = onlyCorrect ? 'Показать все варианты' : 'Только правильные ответы';
+      render();
+    });
+
+    render();
+  </script>
 </body>
 </html>
-
-
-
-
-
